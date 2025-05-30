@@ -1,15 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
+import time
+import urllib.parse
+import logging
 import sqlite3
 import pandas as pd
 import folium
 from folium.plugins import MarkerCluster
-import logging
 from geopy.geocoders import Nominatim
-import time
-import urllib.parse
-import webbrowser
 import os
+import webbrowser
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 # Configurar logging em português
 logging.basicConfig(
@@ -23,8 +27,24 @@ logger = logging.getLogger()
 # Inicializar geocoder
 geolocator = Nominatim(user_agent="acessibilidade_bot")
 
-# Função para busca avançada de informações de acessibilidade
-def busca_acessibilidade_web(nome_atracao):
+# Configurar opções do Selenium
+def configurar_driver():
+    try:
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')  # Executar em modo headless
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+        driver = webdriver.Chrome(options=chrome_options)
+        logger.info("Driver Selenium configurado com sucesso.")
+        return driver
+    except WebDriverException as e:
+        logger.error(f"Erro ao configurar o driver Selenium: {e}")
+        return None
+
+# Função para busca avançada de informações de acessibilidade com Selenium
+def busca_acessibilidade_web(nome_atracao, driver):
     try:
         info_acessibilidade = {
             'motora': [],
@@ -40,8 +60,6 @@ def busca_acessibilidade_web(nome_atracao):
             'cognitiva': ['guia simplificado', 'sala sensorial', 'informação clara', 'deficiência cognitiva', 'autismo', 'espaço sensorial', 'material acessível'],
             'negativas': ['sem acessibilidade', 'sem rampa', 'sem elevador', 'inacessível', 'sem piso tátil', 'sem braille', 'sem libras', 'sem guia auditivo', 'sem acesso', 'não acessível']
         }
-
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
 
         # Lista de fontes confiáveis para buscar informações
         fontes = [
@@ -63,30 +81,28 @@ def busca_acessibilidade_web(nome_atracao):
         # Buscar em cada fonte
         for url in fontes:
             try:
-                response = requests.get(url, headers=headers, timeout=10, verify=False)
-                response.raise_for_status()
-                soup = BeautifulSoup(response.text, 'html.parser')
-                page_text = soup.get_text().lower()
+                driver.get(url)
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+                page_text = driver.find_element(By.TAG_NAME, "body").text.lower()
                 for tipo, palavras in palavras_chave.items():
                     for palavra in palavras:
                         if palavra in page_text:
                             info_acessibilidade[tipo].append(palavra)
-            except requests.RequestException as e:
+            except (TimeoutException, WebDriverException) as e:
                 logger.warning(f"Erro ao acessar {url}: {e}")
 
         # Busca em sites institucionais específicos
         if nome_atracao in sites_institucionais:
             try:
                 url_institucional = sites_institucionais[nome_atracao]
-                response = requests.get(url_institucional, headers=headers, timeout=10, verify=False)
-                response.raise_for_status()
-                soup = BeautifulSoup(response.text, 'html.parser')
-                page_text = soup.get_text().lower()
+                driver.get(url_institucional)
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+                page_text = driver.find_element(By.TAG_NAME, "body").text.lower()
                 for tipo, palavras in palavras_chave.items():
                     for palavra in palavras:
                         if palavra in page_text:
                             info_acessibilidade[tipo].append(palavra)
-            except requests.RequestException as e:
+            except (TimeoutException, WebDriverException) as e:
                 logger.warning(f"Erro ao acessar site institucional {url_institucional}: {e}")
 
         # Gerar descrição consolidada mais clara e coesa
@@ -121,10 +137,10 @@ def busca_acessibilidade_web(nome_atracao):
         return f"Não foram encontradas informações detalhadas de acessibilidade para '{nome_atracao}'.", info_acessibilidade
 
 # Função para coletar informações do local
-def coletar_info_local(nome_atracao):
+def coletar_info_local(nome_atracao, driver):
     try:
         # Buscar informações de acessibilidade
-        descricao, info_acessibilidade = busca_acessibilidade_web(nome_atracao)
+        descricao, info_acessibilidade = busca_acessibilidade_web(nome_atracao, driver)
 
         # Geocodificar a atração
         localizacao = None
@@ -287,51 +303,62 @@ def criar_mapa_interativo(conn):
 
 # Função principal
 def main():
-    # Solicitar o ponto turístico ao usuário
-    ponto_turistico = input("Digite o nome do ponto turístico que deseja pesquisar (ex.: Estádio Mané Garrincha): ").strip()
-
-    if not ponto_turistico:
-        print("Por favor, digite um nome válido para o ponto turístico.")
+    # Configurar o driver Selenium
+    driver = configurar_driver()
+    if not driver:
+        print("Erro ao configurar o driver Selenium. Verifique o log para mais detalhes.")
         return
 
-    # Criar o banco de dados
-    conn = criar_banco_dados()
-    if not conn:
-        print("Erro ao criar o banco de dados. Verifique o log para mais detalhes.")
-        return
+    try:
+        # Solicitar o ponto turístico ao usuário
+        ponto_turistico = input("Digite o nome do ponto turístico que deseja pesquisar (ex.: Estádio Mané Garrincha): ").strip()
 
-    # Coletar informações do local
-    print(f"Coletando informações de acessibilidade para '{ponto_turistico}'...")
-    resultado = coletar_info_local(ponto_turistico)
-    if not resultado:
-        print(f"Não foi possível coletar informações para '{ponto_turistico}'.")
+        if not ponto_turistico:
+            print("Por favor, digite um nome válido para o ponto turístico.")
+            return
+
+        # Criar o banco de dados
+        conn = criar_banco_dados()
+        if not conn:
+            print("Erro ao criar o banco de dados. Verifique o log para mais detalhes.")
+            return
+
+        # Coletar informações do local
+        print(f"Coletando informações de acessibilidade para '{ponto_turistico}'...")
+        resultado = coletar_info_local(ponto_turistico, driver)
+        if not resultado:
+            print(f"Não foi possível coletar informações para '{ponto_turistico}'.")
+            conn.close()
+            return
+
+        # Armazenar os dados no banco
+        armazenar_dados(conn, [resultado])
+
+        # Criar e abrir o mapa interativo
+        print("Gerando o mapa interativo...")
+        mapa_path = criar_mapa_interativo(conn)
+        if mapa_path:
+            mapa_path_absolute = os.path.abspath(mapa_path)
+            mapa_url = f"file:///{mapa_path_absolute.replace(os.sep, '/')}"
+            print(f"Mapa gerado com sucesso! Tentando abrir '{mapa_path}' no Google Chrome...")
+
+            try:
+                chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+                webbrowser.register('chrome', None, webbrowser.GenericBrowser(chrome_path))
+                webbrowser.get('chrome').open(mapa_url)
+            except Exception as e:
+                print(f"Erro ao abrir o mapa automaticamente: {e}")
+                print(f"Por favor, abra o arquivo manualmente em: {mapa_path_absolute}")
+        else:
+            print("Não foi possível gerar o mapa. Verifique o log para mais detalhes.")
+
+        # Fechar a conexão com o banco
         conn.close()
-        return
-
-    # Armazenar os dados no banco
-    armazenar_dados(conn, [resultado])
-
-    # Criar e abrir o mapa interativo
-    print("Gerando o mapa interativo...")
-    mapa_path = criar_mapa_interativo(conn)
-    if mapa_path:
-        mapa_path_absolute = os.path.abspath(mapa_path)
-        mapa_url = f"file:///{mapa_path_absolute.replace(os.sep, '/')}"
-        print(f"Mapa gerado com sucesso! Tentando abrir '{mapa_path}' no Google Chrome...")
-
-        try:
-            chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
-            webbrowser.register('chrome', None, webbrowser.GenericBrowser(chrome_path))
-            webbrowser.get('chrome').open(mapa_url)
-        except Exception as e:
-            print(f"Erro ao abrir o mapa automaticamente: {e}")
-            print(f"Por favor, abra o arquivo manualmente em: {mapa_path_absolute}")
-    else:
-        print("Não foi possível gerar o mapa. Verifique o log para mais detalhes.")
-
-    # Fechar a conexão com o banco
-    conn.close()
-    logger.info("Conexão com o banco de dados fechada.")
+        logger.info("Conexão com o banco de dados fechada.")
+    finally:
+        # Fechar o driver Selenium
+        driver.quit()
+        logger.info("Driver Selenium encerrado.")
 
 if __name__ == "__main__":
     main()
