@@ -5,5 +5,5 @@
 
 # Como executar o bot
 
-- pip install selenium pandas folium
-- python bot
+- pip install selenium webdriver-manager geopy folium beautifulsoup4 requests
+- python bot.py
