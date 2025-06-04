@@ -1,5 +1,10 @@
 import json
 import time
+import re
+import html
+import os
+import logging
+from urllib.parse import urlparse
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -7,257 +12,236 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from geopy.geocoders import Nominatim
 import folium
-import re
-import html
-from urllib.parse import urlparse
-import os
 
 # Configurações globais
 TIMEOUT = 30
-MAX_RELEVANT_SNIPPETS = 10
+MAX_RELEVANT_SNIPPETS = 15
+CONTEXT_WINDOW = 200
 
-# Sistema Completo de Recursos de Acessibilidade
+# Configuração de logging (apenas console)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# Sistema de Recursos de Acessibilidade (atualizado para plataforma)
 ACCESSIBILITY_FEATURES = {
     'rampas': {
-        'terms': [
-            r'rampa[s]? de acesso', r'acesso[s]? para cadeirante[s]?', r'acesso[s]? sem degrau[s]?',
-            r'rampa[s]? inclinada[s]?', r'rampa[s]? de entrada', r'rampa[s]? de circulação',
-            r'rampa[s]? de acessibilidade', r'rampa[s]? para cadeira de rodas',
-            r'rampa[s]? de desnível', r'rampa[s]? de transposição', r'acesso[s]? para mobilidade reduzida',
-            r'rampa[s]? portátil[is]?', r'acesso[s]? por rampa', r'rampa[s]? com corrimão',
-            r'rampa[s]? com inclinação adequada', r'acesso[s]? para pessoas com mobilidade'
-        ],
+        'pattern': re.compile(
+            r'\b(rampa[s]?|acesso[s]? (sem degrau[s]?|nivelado[s]?|por rampa|para mobilidade reduzida|com corrimão|PCD)|inclina[çc][ãa]o acess[íi]vel)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'mobilidade',
-        'regex': True
+        'category': 'mobilidade'
     },
     'elevadores': {
-        'terms': [
-            r'elevador[es]? acess[íi]ve[is]?', r'elevador[es]? para cadeirante[s]?',
-            r'elevador[es]? adaptado[s]?', r'elevador[es]? inclusivo[s]?',
-            r'elevador[es]? para deficiente[s]?', r'elevador[es]? com bot[ôo]es em braille',
-            r'elevador[es]? com sinaliza[çc][ãa]o t[áa]til', r'elevador[es]? com voz',
-            r'elevador[es]? interno[s]?', r'elevador[es]? para PCD',
-            r'elevador[es]? com porta larga', r'elevador[es]? com espaço para cadeiras',
-            r'elevador[es]? de acessibilidade', r'elevador[es]? com áudio', r'elevador[es]? com espelho',
-            r'elevador[es]? para mobilidade reduzida', r'elevador[es]? com controles acessíveis'
-        ],
+        'pattern': re.compile(
+            r'\b(elevador[es]?|elevador[es]? (acess[íi]ve[lis]?|adaptado[s]?|para cadeirante[s]?|com braille|com voz|PCD|de acesso|com porta larga)|acesso por elevador)\b',
+            re.IGNORECASE
+        ),
         'weight': 3,
-        'category': 'mobilidade',
-        'regex': True
+        'category': 'mobilidade'
     },
     'banheiros_adaptados': {
-        'terms': [
-            r'banheiro[s]? adaptado[s]?', r'banheiro[s]? acess[íi]ve[is]?',
-            r'sanit[áa]rio[s]? acess[íi]ve[is]?', r'vaso[s]? sanit[áa]rio[s]? adaptado[s]?',
-            r'banheiro[s]? para deficiente[s]?', r'banheiro[s]? inclusivo[s]?',
-            r'banheiro[s]? para cadeirante[s]?', r'banheiro[s]? com barras de apoio',
-            r'banheiro[s]? com pia adaptada', r'banheiro[s]? com porta larga',
-            r'banheiro[s]? com espa[çc]o para cadeira de rodas', r'banheiro[s]? PCD',
-            r'toalete[s]? adaptado[s]?', r'banheiro[s]? para pessoas com deficiência',
-            r'banheiro[s]? com assento elevado', r'banheiro[s]? com espaço de manobra',
-            r'banheiro[s]? com sinalização acessível', r'banheiro[s]? com acessórios adaptados'
-        ],
+        'pattern': re.compile(
+            r'\b(banheiro[s]?|sanit[áa]rio[s]?|lavabo[s]?)( (adaptado[s]?|acess[íi]ve[lis]?|para cadeirante[s]?|com barras|PCD))?\b',
+            re.IGNORECASE
+        ),
         'weight': 3,
-        'category': 'mobilidade',
-        'regex': True
+        'category': 'mobilidade'
     },
     'plataformas_elevatorias': {
-        'terms': [
-            r'plataforma[s]? elevat[óo]ria[s]?', r'elevador[es]? vertical[is]?',
-            r'plataforma[s]? de acesso', r'plataforma[s]? para cadeirante[s]?',
-            r'elevador[es]? de plataforma', r'plataforma[s]? inclusiva[s]?',
-            r'plataforma[s]? de mobilidade', r'plataforma[s]? acess[íi]vel[is]?',
-            r'plataforma[s]? para deficiente[s]?', r'plataforma[s]? de transposição',
-            r'plataforma[s]? com controles acessíveis', r'plataforma[s]? de elevação',
-            r'dispositivo[s]? de elevação', r'plataforma[s]? para mobilidade reduzida',
-            r'plataforma[s]? com segurança', r'elevador[es]? de acesso'
-        ],
+        'pattern': re.compile(
+            r'\b(plataforma[s]?|plataforma[s]? (elevat[óo]ria[s]?|de acesso|acess[íi]ve[lis]?|para cadeirante[s]?|PCD)|elevador[es]? de plataforma)\b',
+            re.IGNORECASE
+        ),
         'weight': 3,
-        'category': 'mobilidade',
-        'regex': True
+        'category': 'mobilidade'
     },
     'pisos_tateis': {
-        'terms': [
-            r'piso[s]? t[áa]te[is]?', r'piso[s]? podot[áa]te[is]?',
-            r'sinaliza[çc][ãa]o t[áa]til no piso', r'piso[s]? para deficiente[s]? visua[is]?',
-            r'piso[s]? direcional[is]?', r'sinaliza[çc][ãa]o t[áa]til',
-            r'piso[s]? de alerta', r'piso[s]? guia', r'piso[s]? de orienta[çc][ãa]o',
-            r'piso[s]? com textura', r'piso[s]? para cegos', r'piso[s]? de seguran[çc]a',
-            r'piso[s]? com contraste', r'guia[s]? t[áa]til[is]?', r'piso[s]? de acessibilidade',
-            r'caminho[s]? t[áa]til[is]?', r'piso[s]? com relevo', r'orienta[çc][ãa]o t[áa]til no ch[ãa]o'
-        ],
+        'pattern': re.compile(
+            r'\b(piso[s]? t[áa]te[lis]?|piso[s]? podot[áa]te[lis]?|sinaliza[çc][ãa]o t[áa]til no piso|caminho[s]? t[áa]til)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'visual',
-        'regex': True
+        'category': 'visual'
     },
     'braille': {
-        'terms': [
-            r'braille', r'braile', r'sinaliza[çc][ãa]o em braille',
-            r'placa[s]? em braille', r'informa[çc][õo]es em braille',
-            r'mapa[s]? t[áa]til[is]?', r'orienta[çc][õo]es em braille',
-            r'bot[ôo]es em braille', r'descri[çc][ãa]o em braille',
-            r'texto em braille', r'legenda em braille', r'menu em braille',
-            r'identifica[çc][ãa]o em braille', r'rotulagem em braille',
-            r'etiqueta[s]? em braille', r'painel em braille', r'sinal em braille',
-            r'guia em braille', r'placa[s]? t[áa]til[is]? com braille', r'marca[çc][õo]es em braille'
-        ],
+        'pattern': re.compile(
+            r'\b(braille|braile|sinaliza[çc][ãa]o em braille|placa[s]? em braille|informa[çc][õo]es em braille|legenda[s]? em braille)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'visual',
-        'regex': True
+        'category': 'visual'
     },
     'painel_tatil': {
-        'terms': [
-            r'pain[eé]is? t[áa]te[is]?', r'pain[eé]is? podot[áa]te[is]?',
-            r'pain[eé]is? para deficiente[s]? visua[is]?', r'pain[eé]is? de orienta[çc][ãa]o t[áa]til',
-            r'pain[eé]is? com informa[çc][õo]es t[áa]te[is]?', r'mapa[s]? t[áa]til[is]?',
-            r'display t[áa]til', r'interface t[áa]til', r'terminal t[áa]til',
-            r'painel de navega[çc][ãa]o t[áa]til', r'sistema de orienta[çc][ãa]o t[áa]til',
-            r'guia t[áa]til', r'placa[s]? t[áa]til[is]?', r'dispositivo[s]? t[áa]til[is]?',
-            r'painel com relevo', r'orienta[çc][ãa]o para cegos', r'mapa[s]? de acessibilidade'
-        ],
+        'pattern': re.compile(
+            r'\b(pain[eé]is? t[áa]te[lis]?|maquete[s]? t[áa]til|placa[s]? t[áa]til|mapa[s]? t[áa]til)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'visual',
-        'regex': True
+        'category': 'visual'
     },
     'recursos_auditivos': {
-        'terms': [
-            r'sinaliza[çc][ãa]o sonora', r'audioguia[s]?', r'audiodescri[çc][ãa]o',
-            r'sistema[s]? de [áa]udio', r'informa[çc][ãa]o em [áa]udio',
-            r'guias de [áa]udio', r'tour de [áa]udio', r'orienta[çc][ãa]o por [áa]udio',
-            r'narra[çc][ãa]o sonora', r'descri[çc][ãa]o por [áa]udio',
-            r'sistema de som adaptado', r'[áa]udio descritivo',
-            r'fone[s]? de indu[çc][ãa]o magn[ée]tica', r'sistema FM',
-            r'loop auditivo', r'amplificador de som', r'dispositivo[s]? de [áa]udio',
-            r'[áa]udio para deficiente[s]? visua[is]?', r'sinal sonoro', r'alertas sonoros',
-            r'sistema de [áa]udio acess[íi]vel', r'narra[çc][ãa]o em tempo real'
-        ],
+        'pattern': re.compile(
+            r'\b(sinaliza[çc][ãa]o sonora|audioguia[s]?|[áa]udio descritivo|sistema de [áa]udio acess[íi]vel|loop auditivo)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'auditiva',
-        'regex': True
+        'category': 'auditiva'
     },
     'legendas': {
-        'terms': [
-            r'legenda[s]?', r'legenda[s]? inclusiva[s]?', r'legenda[s]? para surdo[s]?',
-            r'legenda[s]? descritiva[s]?', r'legenda[s]? em v[íi]deo[s]?',
-            r'legenda[s]? em tempo real', r'closed caption', r'cc[ ]?[0-9]?',
-            r'subt[íi]tulo[s]? para deficiente[s]? auditivo[s]?', r'legenda[s]? acess[íi]ve[is]?',
-            r'sistema de legenda', r'legenda[s]? em libras',
-            r'legenda[s]? para deficiente[s]? auditivo[s]?', r'legenda[s]? simult[âa]nea[s]?',
-            r'subt[íi]tulo[s]? acess[íi]vel[is]?', r'legenda[s]? ao vivo', r'texto descritivo',
-            r'subt[íi]tulo[s]? em tempo real', r'legenda[s]? para PCD', r'sistema de subtitula[çc][ãa]o'
-        ],
+        'pattern': re.compile(
+            r'\b(legenda[s]? (para surdo[s]?|descritiva[s]?|em tempo real|acess[íi]ve[lis]?|em v[íi]deo)|closed caption[s]?|subt[íi]tulo[s]? acess[íi]ve[lis]?)\b',
+            re.IGNORECASE
+        ),
         'weight': 2,
-        'category': 'auditiva',
-        'regex': True
+        'category': 'auditiva'
     },
     'libras': {
-        'terms': [
-            r'int[ée]rprete[s]? de libras', r'v[íi]deo[s]? em libras', r'atendimento em libras',
-            r'l[íi]ngua brasileira de sinais', r'tradu[çc][ãa]o para libras',
-            r'sinaliza[çc][ãa]o em libras', r'guias em libras', r'orienta[çc][ãa]o em libras',
-            r'linguagem de sinais', r'comunica[çc][ãa]o por sinais',
-            r'tradu[çc][ãa]o simult[âa]nea em libras', r'janela de libras',
-            r'int[ée]rprete de sinais', r'libras no local',
-            r'L[íi]ngua de Sinais Brasileira', r'interpreta[çc][ãa]o em LIBRAS',
-            r'atendimento para surdo[s]?', r'comunica[çc][ãa]o em libras', r'v[íi]deo[s]? acess[íi]ve[is]? em libras',
-            r'servi[çc]o de libras', r'interprete de l[íi]ngua de sinais'
-        ],
+        'pattern': re.compile(
+            r'\b((informa[çc][õo]es|v[íi]deo[s]?|atendimento|sinaliza[çc][ãa]o|tradu[çc][ãa]o) em libras|int[ée]rprete[s]? de libras)\b',
+            re.IGNORECASE
+        ),
         'weight': 3,
-        'category': 'auditiva',
-        'regex': True
+        'category': 'auditiva'
     },
     'vagas_especiais': {
-        'terms': [
-            r'vaga[s]? especial[is]?', r'vaga[s]? para deficiente[s]?',
-            r'estacionamento acess[íi]vel', r'vaga[s]? priorit[áa]ria[s]?',
-            r'vaga[s]? para idoso[s]?', r'vaga[s]? para pessoa[s]? com defici[êe]ncia',
-            r'vaga[s]? exclusiva[s]?', r'vaga[s]? reservada[s]?',
-            r'vaga[s]? azul', r'vaga[s]? com sinaliza[çc][ãa]o especial',
-            r'vaga[s]? ampliada[s]?', r'vaga[s]? para mobilidade reduzida',
-            r'estacionamento para PCD', r'vaga[s]? com acesso f[áa]cil',
-            r'vaga[s]? sinalizada[s]?', r'[áa]rea reservada para deficiente[s]?',
-            r'vaga[s]? de acessibilidade', r'estacionamento priorit[áa]rio'
-        ],
+        'pattern': re.compile(
+            r'\b(vaga[s]? (especial[es]?|para deficiente[s]?|priorit[áa]ria[s]?|PCD)|estacionamento acess[íi]vel)\b',
+            re.IGNORECASE
+        ),
         'weight': 1,
-        'category': 'geral',
-        'regex': True
+        'category': 'geral'
     },
     'acesso_universal': {
-        'terms': [
-            r'acesso universal', r'acessibilidade total', r'desenho universal',
-            r'acessibilidade inclusiva', r'acessibilidade para todo[s]?',
-            r'projeto universal', r'concep[çc][ãa]o universal',
-            r'espa[çc]o universal', r'ambiente inclusivo',
-            r'infraestrutura acess[íi]vel', r'local adaptado',
-            r'espa[çc]o para todo[s]?', r'acesso sem barreira[s]?',
-            r'arquitetura inclusiva', r'design inclusivo',
-            r'ambiente acess[íi]vel', r'acesso para PCD', r'espa[çc]o sem obst[áa]culo[s]?',
-            r'adapta[çc][ãa]o universal', r'acessibilidade ampla', r'design para todo[s]?'
-        ],
+        'pattern': re.compile(
+            r'\b(acesso universal|acessibilidade (total|inclusiva)|desenho universal|ambiente sem barreira[s]?)\b',
+            re.IGNORECASE
+        ),
         'weight': 3,
-        'category': 'geral',
-        'regex': True
+        'category': 'geral'
+    },
+    'acessibilidade_digital': {
+        'pattern': re.compile(
+            r'\b(acessibilidade digital|site acess[íi]vel|compatibilidade com leitor de tela|WCAG [0-9.]+|contraste elevado)\b',
+            re.IGNORECASE
+        ),
+        'weight': 2,
+        'category': 'digital'
+    },
+    'recursos_cognitivos': {
+        'pattern': re.compile(
+            r'\b(sinaliza[çc][ãa]o simplificada|instru[çc][õo]es claras|guia[s]? simplificado[s]?|pictogramas acess[íi]veis|linguagem simples)\b',
+            re.IGNORECASE
+        ),
+        'weight': 2,
+        'category': 'cognitiva'
+    },
+    'assentos_acessiveis': {
+        'pattern': re.compile(
+            r'\b(assento[s]? (acess[íi]ve[lis]?|reservado[s]?|priorit[áa]rio[s]?|para cadeirante[s]?|PCD)|espa[çc]o para cadeirante[s]?)\b',
+            re.IGNORECASE
+        ),
+        'weight': 2,
+        'category': 'geral'
     }
 }
+
+# Palavras-chave de contexto
+CONTEXT_KEYWORDS = [
+    'acess', 'deficiente', 'cadeirante', 'visual', 'auditi', 'surdo', 'PCD', 'inclus',
+    'mobilidade', 'tátil', 'braille', 'libras', 'adaptado', 'acessibilidade', 'universal',
+    'facilidade', 'deficiência', 'barreira', 'inclusão', 'acesso', 'especial'
+]
 
 def setup_driver():
     options = Options()
     options.headless = True
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-    driver = webdriver.Chrome(options=options)
-    driver.set_page_load_timeout(TIMEOUT)
-    return driver
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4472.124 Safari/537.36")
+    try:
+        driver = webdriver.Chrome(options=options)
+        driver.set_page_load_timeout(TIMEOUT)
+        return driver
+    except Exception as e:
+        logger.error(f"Erro ao configurar driver: {e}")
+        raise
 
 def read_tourist_file(file_path):
-    landmarks = []
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
+            landmarks = []
             for line in file:
                 if '|' in line:
                     parts = [p.strip() for p in line.strip().split('|') if p.strip()]
-                    if len(parts) > 1:
+                    if len(parts) >= 2:
                         landmarks.append({
                             'name': parts[0],
                             'sources': parts[1:]
                         })
-        return landmarks
+            logger.info(f"Carregados {len(landmarks)} pontos turísticos de {file_path}")
+            return landmarks
     except Exception as e:
-        print(f"Erro ao ler arquivo: {e}")
+        logger.error(f"Erro ao ler arquivo {file_path}: {e}")
         return []
 
 def extract_relevant_content(text, source):
     relevant_items = []
     text = text.lower()
-    
+    matched_terms = {}
+
     for feature, data in ACCESSIBILITY_FEATURES.items():
-        for term_pattern in data['terms']:
-            try:
-                pattern = re.compile(term_pattern, re.IGNORECASE)
-                matches = pattern.finditer(text)
-                for match in matches:
-                    start = max(0, match.start() - 100)
-                    end = min(len(text), match.end() + 100)
-                    snippet = html.unescape(text[start:end].strip())
-                    snippet = ' '.join(snippet.split())
-                    
-                    term_exists = any(item['term'].lower() == match.group().lower() and 
-                                      item['feature'] == feature for item in relevant_items)
-                    
-                    if not term_exists:
-                        relevant_items.append({
-                            'feature': feature,
-                            'term': match.group(),
-                            'snippet': snippet,
-                            'weight': data['weight'],
-                            'category': data['category'],
-                            'source': source
-                        })
-            except Exception as e:
-                print(f"Erro ao processar padrão '{term_pattern}': {e}")
-                continue
+        matched_terms[feature] = set()
+        pattern = data['pattern']
+        weight = data['weight']
+        category = data['category']
+        matches = pattern.finditer(text)
+        
+        for match in matches:
+            term = match.group(0).lower()
+            start = max(0, match.start() - CONTEXT_WINDOW)
+            end = min(len(text), match.end() + CONTEXT_WINDOW)
+            snippet = text[start:end].strip()
+            
+            # Validação de contexto
+            has_context = any(keyword.lower() in snippet for keyword in CONTEXT_KEYWORDS)
+            if not has_context:
+                implicit_context = (
+                    feature in ['elevadores', 'banheiros_adaptados', 'rampas', 'plataformas_elevatorias'] and
+                    any(word in snippet for word in ['acesso', 'disponível', 'instalado', 'equipado'])
+                )
+                if not implicit_context:
+                    logger.debug(f"Termo rejeitado por falta de contexto: {term} (Feature: {feature}, Snippet: {snippet[:50]}...)")
+                    continue
+            
+            # Normalização para deduplicação
+            normalized_term = re.sub(r'\s+', ' ', term).strip()
+            normalized_term = re.sub(r's\b', '', normalized_term).strip()
+            
+            # Permite variações distintas
+            term_key = f"{feature}:{normalized_term}"
+            if term_key not in matched_terms[feature]:
+                matched_terms[feature].add(term_key)
+                snippet = html.unescape(snippet)
+                snippet = ' '.join(snippet.split())
+                
+                relevant_items.append({
+                    'feature': feature,
+                    'term': term,
+                    'snippet': snippet,
+                    'weight': weight,
+                    'category': category,
+                    'source': source
+                })
+                logger.info(f"Recurso identificado: {feature} - Termo: {term} (Fonte: {source})")
+            else:
+                logger.debug(f"Termo duplicado ignorado: {term} para {feature}")
     
     relevant_items.sort(key=lambda x: -x['weight'])
     return relevant_items[:MAX_RELEVANT_SNIPPETS]
@@ -267,12 +251,12 @@ def scrape_accessibility(driver, landmark, sources):
     
     for source in sources:
         try:
-            print(f"\n🔍 Analisando: {source}")
+            logger.info(f"Analisando fonte: {source}")
             driver.get(source.split('#')[0])
             
             WebDriverWait(driver, TIMEOUT).until(
                 EC.presence_of_element_located((By.TAG_NAME, "body")))
-            time.sleep(2)
+            time.sleep(3)
             
             for _ in range(3):
                 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -282,15 +266,13 @@ def scrape_accessibility(driver, landmark, sources):
             relevant_items = extract_relevant_content(body_text, source)
             
             if relevant_items:
-                print(f"   ✅ Encontrados {len(relevant_items)} recursos de acessibilidade")
-                for item in relevant_items:
-                    print(f"     - {item['feature']}: '{item['term']}' (peso: {item['weight']})")
+                logger.info(f"Encontrados {len(relevant_items)} recursos de acessibilidade em {source}")
                 accessibility_data.extend(relevant_items)
             else:
-                print("   ⚠️ Nenhum recurso de acessibilidade encontrado")
+                logger.warning(f"Nenhum recurso de acessibilidade encontrado em {source}")
                 
         except Exception as e:
-            print(f"   ❌ Erro ao processar: {str(e)[:200]}...")
+            logger.error(f"Erro ao processar {source}: {str(e)[:200]}")
     
     return format_report(accessibility_data)
 
@@ -304,7 +286,9 @@ def format_report(accessibility_items):
                 "mobilidade": 0,
                 "visual": 0,
                 "auditiva": 0,
-                "geral": 0
+                "geral": 0,
+                "digital": 0,
+                "cognitiva": 0
             }
         }
     
@@ -314,13 +298,16 @@ def format_report(accessibility_items):
         "mobilidade": 0,
         "visual": 0,
         "auditiva": 0,
-        "geral": 0
+        "geral": 0,
+        "digital": 0,
+        "cognitiva": 0
     }
     
     for item in accessibility_items:
-        if item['feature'] not in features:
-            features[item['feature']] = []
-        features[item['feature']].append(item)
+        feature = item['feature']
+        if feature not in features:
+            features[feature] = []
+        features[feature].append(item)
         total_score += item['weight']
         category_scores[item['category']] += item['weight']
     
@@ -336,7 +323,6 @@ def classify_accessibility(report):
         return ("Não Acessível", "red")
     
     score = report['score']
-    
     MIN_ACESSIVEL = 10
     MIN_PARCIAL = 5
     
@@ -363,100 +349,68 @@ def save_json(landmark, report, classification, sources):
     try:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-        print(f"   💾 Arquivo salvo: {filename}")
+        logger.info(f"Arquivo JSON salvo: {filename}")
         return filename
     except Exception as e:
-        print(f"   ❌ Erro ao salvar JSON: {e}")
+        logger.error(f"Erro ao salvar JSON: {e}")
         return None
 
 def get_coordinates(landmark):
     try:
-        geolocator = Nominatim(user_agent="accessibility_map_brasilia_v12")
+        geolocator = Nominatim(user_agent="accessibility_map_brasilia_v13")
         
         query = f"{landmark}, Brasília, Distrito Federal, Brazil"
         location = geolocator.geocode(query, timeout=15)
         if location:
-            print(f"   📍 Coordenadas encontradas para {landmark} (Tentativa 1)")
+            logger.info(f"Coordenadas encontradas para {landmark} (Tentativa 1)")
             return [location.latitude, location.longitude]
         
         query = f"{landmark}, Brasília, Brazil"
         location = geolocator.geocode(query, timeout=15)
         if location:
-            print(f"   📍 Coordenadas encontradas para {landmark} (Tentativa 2)")
+            logger.info(f"Coordenadas encontradas para {landmark} (Tentativa 2)")
             return [location.latitude, location.longitude]
         
         query = landmark
         location = geolocator.geocode(query, timeout=15)
         if location:
-            print(f"   📍 Coordenadas encontradas para {landmark} (Tentativa 3)")
+            logger.info(f"Coordenadas encontradas para {landmark} (Tentativa 3)")
             return [location.latitude, location.longitude]
         
-        print(f"   ⚠️ Coordenadas não encontradas para {landmark}. Usando centro de Brasília como fallback.")
+        logger.warning(f"Coordenadas não encontradas para {landmark}. Usando centro de Brasília.")
         return [-15.7942, -47.8825]
     
     except Exception as e:
-        print(f"   ❌ Erro ao obter coordenadas para {landmark}: {e}. Usando centro de Brasília como fallback.")
+        logger.error(f"Erro ao obter coordenadas para {landmark}: {e}")
         return [-15.7942, -47.8825]
 
 def create_popup_html(name, classification, color, report):
     feature_names = {
-        'rampas': 'Rampas de Acesso',
-        'elevadores': 'Elevadores Acessíveis',
-        'banheiros_adaptados': 'Banheiros Adaptados',
-        'plataformas_elevatorias': 'Plataformas Elevatórias',
-        'pisos_tateis': 'Pisos Táteis',
+        'rampas': 'Rampas de acesso',
+        'elevadores': 'Elevadores acessíveis',
+        'banheiros_adaptados': 'Banheiros adaptados',
+        'plataformas_elevatorias': 'Plataformas elevatórias',
+        'pisos_tateis': 'Pisos táteis',
         'braille': 'Sinalização em Braille',
-        'painel_tatil': 'Painéis Táteis',
-        'recursos_auditivos': 'Recursos Auditivos',
-        'legendas': 'Legendas e Legendagem',
+        'painel_tatil': 'Painéis táteis',
+        'recursos_auditivos': 'Recursos auditivos',
+        'legendas': 'Legendas',
         'libras': 'Recursos em Libras',
-        'vagas_especiais': 'Vagas Especiais',
-        'acesso_universal': 'Acesso Universal'
+        'vagas_especiais': 'Vagas especiais',
+        'acesso_universal': 'Acesso universal',
+        'acessibilidade_digital': 'Acessibilidade digital',
+        'recursos_cognitivos': 'Recursos cognitivos',
+        'assentos_acessiveis': 'Assentos acessíveis'
     }
     
-    features_html = ""
-    for feature, items in report['features'].items():
-        items_html = ""
-        for item in items[:3]:
-            source_domain = urlparse(item.get('source', '')).netloc if item.get('source') else 'Fonte não disponível'
-            items_html += f"""
-            <div style="margin-bottom: 8px;">
-                <div style="font-weight: bold; color: #2c3e50;">• {item['term'].title()}:</div>
-                <div style="font-size: 0.9em; margin-left: 10px; color: #34495e;">{html.escape(item['snippet'])}</div>
-                <div style="font-size: 0.8em; color: #7f8c8d; margin-top: 2px;">Fonte: {source_domain}</div>
-            </div>
-            """
-        
-        features_html += f"""
-        <div style="margin-bottom: 12px; border-bottom: 1px solid #ecf0f1; padding-bottom: 8px;">
-            <h4 style="margin: 0 0 5px 0; color: #2980b9;">{feature_names.get(feature, feature)}</h4>
-            {items_html}
-        </div>
-        """
-    
-    categories_html = ""
-    if report['found_any']:
-        categories_html = """
-        <div style="margin-top: 10px; padding: 8px; background-color: #ecf0f1; border-radius: 5px;">
-            <h4 style="margin: 0 0 5px 0; color: #2980b9;">Resumo por Categoria</h4>
-            <div style="display: flex; justify-content: space-between;">
-        """
-        
-        for category, score in report['categories'].items():
-            categories_html += f"""
-                <div style="text-align: center;">
-                    <div style="font-weight: bold; color: #2c3e50;">{category.title()}</div>
-                    <div style="color: #34495e;">{score} pts</div>
-                </div>
-            """
-        
-        categories_html += """
-            </div>
-        </div>
-        """
+    if not report['found_any']:
+        accessibility_summary = "Nenhum recurso de acessibilidade identificado."
+    else:
+        features_list = [feature_names.get(feature, feature) for feature in report['features'].keys()]
+        accessibility_summary = f"Recursos de acessibilidade: {', '.join(features_list)}."
     
     popup_html = f"""
-    <div style="width: 420px; max-height: 500px; overflow-y: auto; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">
             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">{html.escape(name)}</h2>
             <div style="background-color: {color}20; padding: 10px; border-radius: 5px; margin: 10px 0; 
@@ -464,10 +418,9 @@ def create_popup_html(name, classification, color, report):
                 Classificação: {classification} (Score: {report['score']})
             </div>
         </div>
-        <div style="max-height: 350px; overflow-y: auto; padding-right: 5px;">
-            {features_html}
+        <div style="color: #34495e; font-size: 1em;">
+            {accessibility_summary}
         </div>
-        {categories_html}
     </div>
     """
     return popup_html
@@ -478,7 +431,6 @@ def plot_on_map(results):
     map_center = [-15.7942, -47.8825]
     accessibility_map = folium.Map(location=map_center, zoom_start=13, tiles='cartodbpositron')
     
-    # Adiciona o CDN do FontAwesome para garantir que os ícones sejam exibidos
     font_awesome = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     """
@@ -493,12 +445,11 @@ def plot_on_map(results):
         
         coords = get_coordinates(name)
         if not coords:
-            print(f"   ⚠️ Ignorando {name} devido à falta de coordenadas.")
+            logger.warning(f"Ignorando {name} devido à falta de coordenadas.")
             continue
         
         popup_html = create_popup_html(name, classification, color, report)
         
-        # Escolhe o ícone baseado na classificação
         icon_choice = "wheelchair" if classification == "Acessível" else "exclamation-triangle" if classification == "Parcialmente Acessível" else "ban"
         
         folium.Marker(
@@ -536,36 +487,35 @@ def plot_on_map(results):
     
     map_path = os.path.join("results", "accessibility_map.html")
     accessibility_map.save(map_path)
-    print(f"\n🗺️ Mapa gerado com sucesso em: {map_path}")
+    logger.info(f"Mapa gerado: {map_path}")
 
 def main():
-    print("🚀 Iniciando análise de acessibilidade...\n")
+    logger.info("Iniciando análise de acessibilidade...")
     
     os.makedirs("results", exist_ok=True)
     driver = setup_driver()
     landmarks = read_tourist_file("tourist_attractions.txt")
     
     if not landmarks:
-        print("Nenhum ponto turístico encontrado no arquivo.")
+        logger.error("Nenhum ponto turístico encontrado no arquivo.")
         driver.quit()
         return
     
     results = []
     for landmark in landmarks:
-        print(f"\n{'='*70}\n🔷 Processando: {landmark['name']}")
+        logger.info(f"Processando: {landmark['name']}")
         
         report = scrape_accessibility(driver, landmark['name'], landmark['sources'])
         classification = classify_accessibility(report)
         
-        print(f"\n📋 Classificação: {classification[0]}")
-        print(f"📊 Score Total: {report['score']}")
-        print(f"📌 Recursos encontrados:")
+        logger.info(f"Classificação: {classification[0]} (Score: {report['score']})")
+        logger.info("Recursos encontrados:")
         for feature, items in report['features'].items():
-            print(f" - {feature}: {len(items)} itens (peso total: {sum(i['weight'] for i in items)})")
+            logger.info(f" - {feature}: {len(items)} itens (peso total: {sum(i['weight'] for i in items)})")
         
-        print(f"\n📊 Pontuação por Categoria:")
+        logger.info("Pontuação por Categoria:")
         for category, score in report['categories'].items():
-            print(f" - {category.title()}: {score} pontos")
+            logger.info(f" - {category.title()}: {score} pontos")
         
         json_file = save_json(landmark['name'], report, classification, landmark['sources'])
         results.append({
@@ -575,9 +525,9 @@ def main():
         })
     
     driver.quit()
-    print("\n📊 Gerando mapa interativo...")
+    logger.info("Gerando mapa interativo...")
     plot_on_map(results)
-    print("\n✅ Análise concluída com sucesso!")
+    logger.info("Análise concluída com sucesso!")
 
 if __name__ == "__main__":
     main()
