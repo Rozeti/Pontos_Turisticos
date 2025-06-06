@@ -1,0 +1,63 @@
+{
+    "name": "Memorial JK",
+    "report": {
+        "features": {
+            "elevadores": [
+                {
+                    "feature": "elevadores",
+                    "term": "elevador",
+                    "snippet": "e idosos têm direito a meia-entrada. mas só aceitam pagamento em dinheiro! acessibilidade para os visitantes portadores de deficiência física, o museu possui rampa de acesso, banheiros adaptados e um elevador interno para o 2° piso. a maior parte do conteúdo do museu é disponível em português, inglês e também em braile. esse post faz parte de uma blogagem coletiva com o tema viagem pela história. veja os",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://acrosstheuniverse.blog.br/memorial-jk-brasilia/#:~:text=Acessibilidade"
+                }
+            ],
+            "banheiros_adaptados": [
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "banheiros adaptados",
+                    "snippet": "a é r$10 e os estudantes e idosos têm direito a meia-entrada. mas só aceitam pagamento em dinheiro! acessibilidade para os visitantes portadores de deficiência física, o museu possui rampa de acesso, banheiros adaptados e um elevador interno para o 2° piso. a maior parte do conteúdo do museu é disponível em português, inglês e também em braile. esse post faz parte de uma blogagem coletiva com o tema viagem pela hist",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://acrosstheuniverse.blog.br/memorial-jk-brasilia/#:~:text=Acessibilidade"
+                }
+            ],
+            "rampas": [
+                {
+                    "feature": "rampas",
+                    "term": "rampa",
+                    "snippet": "o valor da entrada é r$10 e os estudantes e idosos têm direito a meia-entrada. mas só aceitam pagamento em dinheiro! acessibilidade para os visitantes portadores de deficiência física, o museu possui rampa de acesso, banheiros adaptados e um elevador interno para o 2° piso. a maior parte do conteúdo do museu é disponível em português, inglês e também em braile. esse post faz parte de uma blogagem colet",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://acrosstheuniverse.blog.br/memorial-jk-brasilia/#:~:text=Acessibilidade"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "braile",
+                    "snippet": "dores de deficiência física, o museu possui rampa de acesso, banheiros adaptados e um elevador interno para o 2° piso. a maior parte do conteúdo do museu é disponível em português, inglês e também em braile. esse post faz parte de uma blogagem coletiva com o tema viagem pela história. veja os posts dos outros blogs participantes: viajante móvel: o que fazer em rouen, capital histórica da normandia vamos",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://acrosstheuniverse.blog.br/memorial-jk-brasilia/#:~:text=Acessibilidade"
+                }
+            ]
+        },
+        "score": 10,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 8,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Acessível",
+    "color": "green",
+    "sources": [
+        "https://acrosstheuniverse.blog.br/memorial-jk-brasilia/#:~:text=Acessibilidade"
+    ],
+    "timestamp": "2025-06-06 19:46:57"
+}

@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f525fc1fc9ccb20af07309df59f37ac4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed; bottom: 50px; left: 50px; width: 200px; 
+                background: linear-gradient(to bottom, #ffffff, #f1f5f9); 
+                border: 2px solid #3498db; z-index: 9999; font-size: 14px;
+                padding: 15px; border-radius: 10px; font-family: 'Arial', sans-serif;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <h4 style="margin: 0 0 10px 0; text-align: center; color: #2c3e50; 
+                   font-size: 16px; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px;">
+            Legenda
+        </h4>
+        <div style="margin: 8px 0; display: flex; align-items: center;">
+            <i class="fa fa-wheelchair" style="color: green; font-size: 18px; margin-right: 8px;"></i>
+            <span style="color: #2c3e50;">Acessível</span>
+        </div>
+        <div style="margin: 8px 0; display: flex; align-items: center;">
+            <i class="fa fa-exclamation-triangle" style="color: orange; font-size: 18px; margin-right: 8px;"></i>
+            <span style="color: #2c3e50;">Parcialmente Acessível</span>
+        </div>
+        <div style="margin: 8px 0; display: flex; align-items: center;">
+            <i class="fa fa-ban" style="color: red; font-size: 18px; margin-right: 8px;"></i>
+            <span style="color: #2c3e50;">Não Acessível</span>
+        </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_f525fc1fc9ccb20af07309df59f37ac4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f525fc1fc9ccb20af07309df59f37ac4 = L.map(
+                "map_f525fc1fc9ccb20af07309df59f37ac4",
+                {
+                    center: [-15.7942, -47.8825],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_3efa9eb29495675669cafb8604e25ddf = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3efa9eb29495675669cafb8604e25ddf.addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var marker_3288ba102f9e34a589f18bf84569dc63 = L.marker(
+                [-15.7841314, -47.9133299],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_52b2636337c614684b6d5a392d1e10e5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "wheelchair",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_913d2f72495e14df504ac19dc9fea67a = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_37156ec7494af792296917a65ec092c9 = $(`<div id="html_37156ec7494af792296917a65ec092c9" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Memorial JK</h2>             <div style="background-color: green20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: green; border-left: 5px solid green; text-align: center; font-size: 1.1em;">                 Classificação: Acessível (Score: 10)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Elevadores acessíveis, Banheiros adaptados, Rampas de acesso, Sinalização em Braille.         </div>     </div>     </div>`)[0];
+                popup_913d2f72495e14df504ac19dc9fea67a.setContent(html_37156ec7494af792296917a65ec092c9);
+            
+        
+
+        marker_3288ba102f9e34a589f18bf84569dc63.bindPopup(popup_913d2f72495e14df504ac19dc9fea67a)
+        ;
+
+        
+    
+    
+            marker_3288ba102f9e34a589f18bf84569dc63.bindTooltip(
+                `<div>
+                     Memorial JK - Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3288ba102f9e34a589f18bf84569dc63.setIcon(icon_52b2636337c614684b6d5a392d1e10e5);
+            
+    
+            var marker_54d1656eea256d2ee30d27bf08651064 = L.marker(
+                [-15.7876529, -47.8989349],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_e3d6a723a0f2b2a441988b83cd2987eb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "wheelchair",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ccd5fca851a604335724fcb0d80c7ad1 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_21ffb637f8083dbb92ec43db3c3e3fa6 = $(`<div id="html_21ffb637f8083dbb92ec43db3c3e3fa6" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Planetário de Brasília</h2>             <div style="background-color: green20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: green; border-left: 5px solid green; text-align: center; font-size: 1.1em;">                 Classificação: Acessível (Score: 13)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Banheiros adaptados, Plataformas elevatórias, Rampas de acesso, Sinalização em Braille.         </div>     </div>     </div>`)[0];
+                popup_ccd5fca851a604335724fcb0d80c7ad1.setContent(html_21ffb637f8083dbb92ec43db3c3e3fa6);
+            
+        
+
+        marker_54d1656eea256d2ee30d27bf08651064.bindPopup(popup_ccd5fca851a604335724fcb0d80c7ad1)
+        ;
+
+        
+    
+    
+            marker_54d1656eea256d2ee30d27bf08651064.bindTooltip(
+                `<div>
+                     Planetário de Brasília - Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_54d1656eea256d2ee30d27bf08651064.setIcon(icon_e3d6a723a0f2b2a441988b83cd2987eb);
+            
+    
+            var marker_cdece65c46941ab7ce340dbd6099754b = L.marker(
+                [-15.7906947, -47.8929729],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_faf3c3ed6db5243304d2571b20e4e827 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_25f15cc4cd6813b20ad40321c7c46f88 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_00be311a1c4080f0e9c94a2f31abd622 = $(`<div id="html_00be311a1c4080f0e9c94a2f31abd622" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Torre de TV</h2>             <div style="background-color: orange20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: orange; border-left: 5px solid orange; text-align: center; font-size: 1.1em;">                 Classificação: Parcialmente Acessível (Score: 8)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Rampas de acesso, Sinalização em Braille.         </div>     </div>     </div>`)[0];
+                popup_25f15cc4cd6813b20ad40321c7c46f88.setContent(html_00be311a1c4080f0e9c94a2f31abd622);
+            
+        
+
+        marker_cdece65c46941ab7ce340dbd6099754b.bindPopup(popup_25f15cc4cd6813b20ad40321c7c46f88)
+        ;
+
+        
+    
+    
+            marker_cdece65c46941ab7ce340dbd6099754b.bindTooltip(
+                `<div>
+                     Torre de TV - Parcialmente Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cdece65c46941ab7ce340dbd6099754b.setIcon(icon_faf3c3ed6db5243304d2571b20e4e827);
+            
+    
+            var marker_64a9f43ccbf3877d8d18560ebdf7e940 = L.marker(
+                [-15.796946, -47.879158],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_8bf9c307fe307a3fb736ab1d1cfd1ad3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "wheelchair",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_248fa256e72dab496dc3ea8bccbee0b8 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_878307977addc41f15e39816bbaa70ea = $(`<div id="html_878307977addc41f15e39816bbaa70ea" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Complexo Cultural da República</h2>             <div style="background-color: green20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: green; border-left: 5px solid green; text-align: center; font-size: 1.1em;">                 Classificação: Acessível (Score: 10)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Banheiros adaptados, Sinalização em Braille, Plataformas elevatórias, Rampas de acesso.         </div>     </div>     </div>`)[0];
+                popup_248fa256e72dab496dc3ea8bccbee0b8.setContent(html_878307977addc41f15e39816bbaa70ea);
+            
+        
+
+        marker_64a9f43ccbf3877d8d18560ebdf7e940.bindPopup(popup_248fa256e72dab496dc3ea8bccbee0b8)
+        ;
+
+        
+    
+    
+            marker_64a9f43ccbf3877d8d18560ebdf7e940.bindTooltip(
+                `<div>
+                     Complexo Cultural da República - Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_64a9f43ccbf3877d8d18560ebdf7e940.setIcon(icon_8bf9c307fe307a3fb736ab1d1cfd1ad3);
+            
+    
+            var marker_4d8b1a8e7fee7377a8f386af000376ee = L.marker(
+                [-15.7983445, -47.8755465],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_0c9e17f8e7b4b7a1bde298ce253ed434 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f89f16188cf9ebc51a4111213e367eb = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_26e4515e5f341941da9974235b01fdc8 = $(`<div id="html_26e4515e5f341941da9974235b01fdc8" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Catedral Metropolitana de Brasília</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_0f89f16188cf9ebc51a4111213e367eb.setContent(html_26e4515e5f341941da9974235b01fdc8);
+            
+        
+
+        marker_4d8b1a8e7fee7377a8f386af000376ee.bindPopup(popup_0f89f16188cf9ebc51a4111213e367eb)
+        ;
+
+        
+    
+    
+            marker_4d8b1a8e7fee7377a8f386af000376ee.bindTooltip(
+                `<div>
+                     Catedral Metropolitana de Brasília - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4d8b1a8e7fee7377a8f386af000376ee.setIcon(icon_0c9e17f8e7b4b7a1bde298ce253ed434);
+            
+    
+            var marker_6fc6af66a8d06564b011c788a6d40948 = L.marker(
+                [-15.8011592, -47.8613363],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_23728ad067390686bc0ab8323f4b6513 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_beeaf50ccc34c882fa10152953aab46c = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_50e44efc3c7d90098ce0db0df5da7133 = $(`<div id="html_50e44efc3c7d90098ce0db0df5da7133" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Praça dos Três Poderes</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_beeaf50ccc34c882fa10152953aab46c.setContent(html_50e44efc3c7d90098ce0db0df5da7133);
+            
+        
+
+        marker_6fc6af66a8d06564b011c788a6d40948.bindPopup(popup_beeaf50ccc34c882fa10152953aab46c)
+        ;
+
+        
+    
+    
+            marker_6fc6af66a8d06564b011c788a6d40948.bindTooltip(
+                `<div>
+                     Praça dos Três Poderes - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6fc6af66a8d06564b011c788a6d40948.setIcon(icon_23728ad067390686bc0ab8323f4b6513);
+            
+    
+            var marker_081c1091732c6b5703d03acb07af5bf7 = L.marker(
+                [-15.8005935, -47.8947559],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_98e03d6a794de37789ac140dbba820e2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_24f5687abd1b3f8abe18116ff3296b5e = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_7a8a88674dfa099644400a7932c23e01 = $(`<div id="html_7a8a88674dfa099644400a7932c23e01" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Santuário Dom Bosco</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_24f5687abd1b3f8abe18116ff3296b5e.setContent(html_7a8a88674dfa099644400a7932c23e01);
+            
+        
+
+        marker_081c1091732c6b5703d03acb07af5bf7.bindPopup(popup_24f5687abd1b3f8abe18116ff3296b5e)
+        ;
+
+        
+    
+    
+            marker_081c1091732c6b5703d03acb07af5bf7.bindTooltip(
+                `<div>
+                     Santuário Dom Bosco - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_081c1091732c6b5703d03acb07af5bf7.setIcon(icon_98e03d6a794de37789ac140dbba820e2);
+            
+    
+            var marker_481886fa56ace7433980fd5c18604467 = L.marker(
+                [-29.7865403, -50.8952525],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_9820796bab9f9100785c57c3af701d05 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aba733d4995fbf6cc4af9018aa0594a7 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_3fc9cae861029173d6ad0d55daa33397 = $(`<div id="html_3fc9cae861029173d6ad0d55daa33397" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Igreja Nossa Senhora de Fátima (Igrejinha)</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_aba733d4995fbf6cc4af9018aa0594a7.setContent(html_3fc9cae861029173d6ad0d55daa33397);
+            
+        
+
+        marker_481886fa56ace7433980fd5c18604467.bindPopup(popup_aba733d4995fbf6cc4af9018aa0594a7)
+        ;
+
+        
+    
+    
+            marker_481886fa56ace7433980fd5c18604467.bindTooltip(
+                `<div>
+                     Igreja Nossa Senhora de Fátima (Igrejinha) - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_481886fa56ace7433980fd5c18604467.setIcon(icon_9820796bab9f9100785c57c3af701d05);
+            
+    
+            var marker_d9355448d52e65994f27efd76ca9f107 = L.marker(
+                [-15.8240937, -47.9292775],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_b9f7abaa11de9e89ee360b437ad57766 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d3f3de688ae6a3041dd4015f5880cf48 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_be01bbb3c4f327cb490c47d9c68e5ceb = $(`<div id="html_be01bbb3c4f327cb490c47d9c68e5ceb" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Templo da Boa Vontade</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_d3f3de688ae6a3041dd4015f5880cf48.setContent(html_be01bbb3c4f327cb490c47d9c68e5ceb);
+            
+        
+
+        marker_d9355448d52e65994f27efd76ca9f107.bindPopup(popup_d3f3de688ae6a3041dd4015f5880cf48)
+        ;
+
+        
+    
+    
+            marker_d9355448d52e65994f27efd76ca9f107.bindTooltip(
+                `<div>
+                     Templo da Boa Vontade - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d9355448d52e65994f27efd76ca9f107.setIcon(icon_b9f7abaa11de9e89ee360b437ad57766);
+            
+    
+            var marker_f9902a05790c899bb22d063ae3b14ac5 = L.marker(
+                [-15.7807513, -47.9241512],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_6fbdc35111f2152653669b9ab5e54a8a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_82564de81b42f86b0656df3e36f722e7 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_b3b6f83ec45e0d88296d20f2a52060d1 = $(`<div id="html_b3b6f83ec45e0d88296d20f2a52060d1" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Catedral Militar Rainha da Paz</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_82564de81b42f86b0656df3e36f722e7.setContent(html_b3b6f83ec45e0d88296d20f2a52060d1);
+            
+        
+
+        marker_f9902a05790c899bb22d063ae3b14ac5.bindPopup(popup_82564de81b42f86b0656df3e36f722e7)
+        ;
+
+        
+    
+    
+            marker_f9902a05790c899bb22d063ae3b14ac5.bindTooltip(
+                `<div>
+                     Catedral Militar Rainha da Paz - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f9902a05790c899bb22d063ae3b14ac5.setIcon(icon_6fbdc35111f2152653669b9ab5e54a8a);
+            
+    
+            var marker_30f145829113fd5cd2e4655a672dcdf1 = L.marker(
+                [-15.8010944, -47.8616779],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_7100d654dda86a6e89483e418007738b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d640a3d90f25656fc48d4c9fd23b41e0 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_581ae255b8c5ea140da58fd911e5420f = $(`<div id="html_581ae255b8c5ea140da58fd911e5420f" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Espaço Lúcio Costa</h2>             <div style="background-color: orange20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: orange; border-left: 5px solid orange; text-align: center; font-size: 1.1em;">                 Classificação: Parcialmente Acessível (Score: 5)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Plataformas elevatórias, Painéis táteis.         </div>     </div>     </div>`)[0];
+                popup_d640a3d90f25656fc48d4c9fd23b41e0.setContent(html_581ae255b8c5ea140da58fd911e5420f);
+            
+        
+
+        marker_30f145829113fd5cd2e4655a672dcdf1.bindPopup(popup_d640a3d90f25656fc48d4c9fd23b41e0)
+        ;
+
+        
+    
+    
+            marker_30f145829113fd5cd2e4655a672dcdf1.bindTooltip(
+                `<div>
+                     Espaço Lúcio Costa - Parcialmente Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_30f145829113fd5cd2e4655a672dcdf1.setIcon(icon_7100d654dda86a6e89483e418007738b);
+            
+    
+            var marker_34119439b421595f94deb2aa0110d5e0 = L.marker(
+                [-15.796739, -47.8082312],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_9902efc979c907bbda6599a1e00df628 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac562d574b66fa5e967808926682b12f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_471792390f3172f753f2eb07941e9c34 = $(`<div id="html_471792390f3172f753f2eb07941e9c34" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Ermida Dom Bosco</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 4)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Rampas de acesso, Sinalização em Braille.         </div>     </div>     </div>`)[0];
+                popup_ac562d574b66fa5e967808926682b12f.setContent(html_471792390f3172f753f2eb07941e9c34);
+            
+        
+
+        marker_34119439b421595f94deb2aa0110d5e0.bindPopup(popup_ac562d574b66fa5e967808926682b12f)
+        ;
+
+        
+    
+    
+            marker_34119439b421595f94deb2aa0110d5e0.bindTooltip(
+                `<div>
+                     Ermida Dom Bosco - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_34119439b421595f94deb2aa0110d5e0.setIcon(icon_9902efc979c907bbda6599a1e00df628);
+            
+    
+            var marker_80b54edecfd4f817ad236e71bf410bb5 = L.marker(
+                [-15.7942, -47.8825],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_f55de9adb04ace863e4f85fd2c980345 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f6ad67fe875d060925739388ce66a28 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_441f5f633fe3776fc2dcb92cd6f1d4c3 = $(`<div id="html_441f5f633fe3776fc2dcb92cd6f1d4c3" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Museu Nacional da República</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_0f6ad67fe875d060925739388ce66a28.setContent(html_441f5f633fe3776fc2dcb92cd6f1d4c3);
+            
+        
+
+        marker_80b54edecfd4f817ad236e71bf410bb5.bindPopup(popup_0f6ad67fe875d060925739388ce66a28)
+        ;
+
+        
+    
+    
+            marker_80b54edecfd4f817ad236e71bf410bb5.bindTooltip(
+                `<div>
+                     Museu Nacional da República - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_80b54edecfd4f817ad236e71bf410bb5.setIcon(icon_f55de9adb04ace863e4f85fd2c980345);
+            
+    
+            var marker_d8449e49169f448e5367937e5fea6d2d = L.marker(
+                [-15.7928467, -47.8221318],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_b2d4317e15218f0f938a2127b248b7bc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fe1288650c654bef4d3df62ad49d4de7 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_160d161b6320050d7dec071510c567cc = $(`<div id="html_160d161b6320050d7dec071510c567cc" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Palácio da Alvorada</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 3)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Plataformas elevatórias.         </div>     </div>     </div>`)[0];
+                popup_fe1288650c654bef4d3df62ad49d4de7.setContent(html_160d161b6320050d7dec071510c567cc);
+            
+        
+
+        marker_d8449e49169f448e5367937e5fea6d2d.bindPopup(popup_fe1288650c654bef4d3df62ad49d4de7)
+        ;
+
+        
+    
+    
+            marker_d8449e49169f448e5367937e5fea6d2d.bindTooltip(
+                `<div>
+                     Palácio da Alvorada - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d8449e49169f448e5367937e5fea6d2d.setIcon(icon_b2d4317e15218f0f938a2127b248b7bc);
+            
+    
+            var marker_5e4bb0491e429adb7035254408d75f5e = L.marker(
+                [-15.7989983, -47.8607657],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_085540aef11b1437ae1cb682d0dba21b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_86d3162b52d77170a85e6fd38dc895e5 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_a1979fe22a7d4769f9289eeb74ff6f60 = $(`<div id="html_a1979fe22a7d4769f9289eeb74ff6f60" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Palácio do Planalto</h2>             <div style="background-color: orange20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: orange; border-left: 5px solid orange; text-align: center; font-size: 1.1em;">                 Classificação: Parcialmente Acessível (Score: 6)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Plataformas elevatórias, Recursos em Libras.         </div>     </div>     </div>`)[0];
+                popup_86d3162b52d77170a85e6fd38dc895e5.setContent(html_a1979fe22a7d4769f9289eeb74ff6f60);
+            
+        
+
+        marker_5e4bb0491e429adb7035254408d75f5e.bindPopup(popup_86d3162b52d77170a85e6fd38dc895e5)
+        ;
+
+        
+    
+    
+            marker_5e4bb0491e429adb7035254408d75f5e.bindTooltip(
+                `<div>
+                     Palácio do Planalto - Parcialmente Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5e4bb0491e429adb7035254408d75f5e.setIcon(icon_085540aef11b1437ae1cb682d0dba21b);
+            
+    
+            var marker_4438757e36fae45be6cab7633afe0f90 = L.marker(
+                [-15.8006683, -47.8672925],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_c7ce145eb6dfaabec2b0905ce5a62a01 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0e8c8dffda47515004c9b8c3ccc4aae5 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_70125407ccd3b9136ee6e20183cd5d7e = $(`<div id="html_70125407ccd3b9136ee6e20183cd5d7e" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Palácio Itamaraty</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_0e8c8dffda47515004c9b8c3ccc4aae5.setContent(html_70125407ccd3b9136ee6e20183cd5d7e);
+            
+        
+
+        marker_4438757e36fae45be6cab7633afe0f90.bindPopup(popup_0e8c8dffda47515004c9b8c3ccc4aae5)
+        ;
+
+        
+    
+    
+            marker_4438757e36fae45be6cab7633afe0f90.bindTooltip(
+                `<div>
+                     Palácio Itamaraty - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4438757e36fae45be6cab7633afe0f90.setIcon(icon_c7ce145eb6dfaabec2b0905ce5a62a01);
+            
+    
+            var marker_6bdce38df16510268180c7512fe3db9e = L.marker(
+                [-15.8602218, -47.9595535],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_b887cda7cd01fa066cd400a43dc0f406 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_619b5519dccae4f396393c514a9d2170 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_13cfaae9115307b846e34a1bec7fa3fa = $(`<div id="html_13cfaae9115307b846e34a1bec7fa3fa" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Museu Vivo da Memória Candanga</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_619b5519dccae4f396393c514a9d2170.setContent(html_13cfaae9115307b846e34a1bec7fa3fa);
+            
+        
+
+        marker_6bdce38df16510268180c7512fe3db9e.bindPopup(popup_619b5519dccae4f396393c514a9d2170)
+        ;
+
+        
+    
+    
+            marker_6bdce38df16510268180c7512fe3db9e.bindTooltip(
+                `<div>
+                     Museu Vivo da Memória Candanga - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6bdce38df16510268180c7512fe3db9e.setIcon(icon_b887cda7cd01fa066cd400a43dc0f406);
+            
+    
+            var marker_91676f22fb3112ad80855d825f095a11 = L.marker(
+                [-15.7998476, -47.9070091],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_95968aaa7f087e8d68724bc8e0c729b1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_711a915b489cec140132e176a196f6a6 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_01601c0e68506ab0892d52850b1aa29a = $(`<div id="html_01601c0e68506ab0892d52850b1aa29a" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Parque da Cidade Sarah Kubitschek</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_711a915b489cec140132e176a196f6a6.setContent(html_01601c0e68506ab0892d52850b1aa29a);
+            
+        
+
+        marker_91676f22fb3112ad80855d825f095a11.bindPopup(popup_711a915b489cec140132e176a196f6a6)
+        ;
+
+        
+    
+    
+            marker_91676f22fb3112ad80855d825f095a11.bindTooltip(
+                `<div>
+                     Parque da Cidade Sarah Kubitschek - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_91676f22fb3112ad80855d825f095a11.setIcon(icon_95968aaa7f087e8d68724bc8e0c729b1);
+            
+    
+            var marker_47a06fca21001fbe9ce6aa5a56879580 = L.marker(
+                [-15.8613121, -47.8286974],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_f7355f844a9a6a198d2a2ce3d2d44b6c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_04122bd0ba7678d95caa43161ca7963f = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_f1f21b515a29971abf600eaf518b2651 = $(`<div id="html_f1f21b515a29971abf600eaf518b2651" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Jardim Botânico de Brasília</h2>             <div style="background-color: red20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: red; border-left: 5px solid red; text-align: center; font-size: 1.1em;">                 Classificação: Não Acessível (Score: 0)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Nenhum recurso de acessibilidade identificado.         </div>     </div>     </div>`)[0];
+                popup_04122bd0ba7678d95caa43161ca7963f.setContent(html_f1f21b515a29971abf600eaf518b2651);
+            
+        
+
+        marker_47a06fca21001fbe9ce6aa5a56879580.bindPopup(popup_04122bd0ba7678d95caa43161ca7963f)
+        ;
+
+        
+    
+    
+            marker_47a06fca21001fbe9ce6aa5a56879580.bindTooltip(
+                `<div>
+                     Jardim Botânico de Brasília - Não Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_47a06fca21001fbe9ce6aa5a56879580.setIcon(icon_f7355f844a9a6a198d2a2ce3d2d44b6c);
+            
+    
+            var marker_f023eb799e25788e377144dec2088747 = L.marker(
+                [-15.6329991, -48.0040548],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_a25cd74e0d38948215ee3449515bf543 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5a8ec9978394414a5e5beedb4b358f74 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_f8dceda85ff730807635987cba12d4b7 = $(`<div id="html_f8dceda85ff730807635987cba12d4b7" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">Parque Nacional de Brasília</h2>             <div style="background-color: orange20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: orange; border-left: 5px solid orange; text-align: center; font-size: 1.1em;">                 Classificação: Parcialmente Acessível (Score: 6)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Banheiros adaptados, Plataformas elevatórias.         </div>     </div>     </div>`)[0];
+                popup_5a8ec9978394414a5e5beedb4b358f74.setContent(html_f8dceda85ff730807635987cba12d4b7);
+            
+        
+
+        marker_f023eb799e25788e377144dec2088747.bindPopup(popup_5a8ec9978394414a5e5beedb4b358f74)
+        ;
+
+        
+    
+    
+            marker_f023eb799e25788e377144dec2088747.bindTooltip(
+                `<div>
+                     Parque Nacional de Brasília - Parcialmente Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f023eb799e25788e377144dec2088747.setIcon(icon_a25cd74e0d38948215ee3449515bf543);
+            
+    
+            var marker_225b6675e9def1f5284da3e7d3ccdcd2 = L.marker(
+                [-15.7942, -47.8825],
+                {
+}
+            ).addTo(map_f525fc1fc9ccb20af07309df59f37ac4);
+        
+    
+            var icon_0faae13d2821de921eaed4a2d955cd6c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d80642843017e73a6d8f7df50136e5a4 = L.popup({
+  "maxWidth": 450,
+});
+
+        
+            
+                var html_7931997d1aa12df6314d2865aea241e8 = $(`<div id="html_7931997d1aa12df6314d2865aea241e8" style="width: 100.0%; height: 100.0%;">     <div style="width: 420px; font-family: 'Arial', sans-serif; padding: 15px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">         <div style="border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 12px;">             <h2 style="margin: 0; color: #2c3e50; font-size: 1.4em;">UNA Parque (Parque Ecológico do Lago Norte)</h2>             <div style="background-color: orange20; padding: 10px; border-radius: 5px; margin: 10px 0;                   font-weight: bold; color: orange; border-left: 5px solid orange; text-align: center; font-size: 1.1em;">                 Classificação: Parcialmente Acessível (Score: 7)             </div>         </div>         <div style="color: #34495e; font-size: 1em;">             Recursos de acessibilidade: Banheiros adaptados, Rampas de acesso, Sinalização em Braille.         </div>     </div>     </div>`)[0];
+                popup_d80642843017e73a6d8f7df50136e5a4.setContent(html_7931997d1aa12df6314d2865aea241e8);
+            
+        
+
+        marker_225b6675e9def1f5284da3e7d3ccdcd2.bindPopup(popup_d80642843017e73a6d8f7df50136e5a4)
+        ;
+
+        
+    
+    
+            marker_225b6675e9def1f5284da3e7d3ccdcd2.bindTooltip(
+                `<div>
+                     UNA Parque (Parque Ecológico do Lago Norte) - Parcialmente Acessível
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_225b6675e9def1f5284da3e7d3ccdcd2.setIcon(icon_0faae13d2821de921eaed4a2d955cd6c);
+            
+</script>
+</html>

@@ -1,0 +1,22 @@
+{
+    "name": "Santuário Dom Bosco",
+    "report": {
+        "features": {},
+        "score": 0,
+        "found_any": false,
+        "categories": {
+            "mobilidade": 0,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Não Acessível",
+    "color": "red",
+    "sources": [
+        "https://turismo.df.gov.br/ponto-turistico/santuario-dom-bosco-acessibilidade/"
+    ],
+    "timestamp": "2025-06-06 19:48:36"
+}

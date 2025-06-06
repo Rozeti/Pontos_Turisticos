@@ -1,0 +1,43 @@
+{
+    "name": "Ermida Dom Bosco",
+    "report": {
+        "features": {
+            "rampas": [
+                {
+                    "feature": "rampas",
+                    "term": "rampas",
+                    "snippet": "mo de brasília. ao redor estende-se o parque ecológico ermida dom bosco, recentemente categorizado como monumento natural. em 2020, o local passou por reformas que trouxeram mais acessibilidade, como rampas de acesso, pisos táteis e placas com orientações em braille. monumento foi inaugurado antes de brasília | foto: arquivo público do df da capela projetada pelo arquiteto oscar niemeyer, é possível con",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.agenciabrasilia.df.gov.br/w/tbt-ermida-dom-bosco-refugio-de-fe-natureza-e-historia-em-brasilia/"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "braille",
+                    "snippet": "da dom bosco, recentemente categorizado como monumento natural. em 2020, o local passou por reformas que trouxeram mais acessibilidade, como rampas de acesso, pisos táteis e placas com orientações em braille. monumento foi inaugurado antes de brasília | foto: arquivo público do df da capela projetada pelo arquiteto oscar niemeyer, é possível contemplar um dos melhores ângulos de brasília, no ponto princi",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.agenciabrasilia.df.gov.br/w/tbt-ermida-dom-bosco-refugio-de-fe-natureza-e-historia-em-brasilia/"
+                }
+            ]
+        },
+        "score": 4,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Não Acessível",
+    "color": "red",
+    "sources": [
+        "https://www.agenciabrasilia.df.gov.br/w/tbt-ermida-dom-bosco-refugio-de-fe-natureza-e-historia-em-brasilia/"
+    ],
+    "timestamp": "2025-06-06 19:49:03"
+}

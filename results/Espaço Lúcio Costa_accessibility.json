@@ -1,0 +1,43 @@
+{
+    "name": "Espaço Lúcio Costa",
+    "report": {
+        "features": {
+            "plataformas_elevatorias": [
+                {
+                    "feature": "plataformas_elevatorias",
+                    "term": "plataforma",
+                    "snippet": "entro cultural três poderes (cc3p), o espaço é administrado pela secretaria de estado de cultura do distrito federal e fica aberto de terça a domingo - inclusive feriados - das 9h às 18h, e conta com plataforma de acessibilidade para cadeirantes além de maquete tátil para deficientes visuais.[2][3] em seu interior fica a maquete de brasília, circundada por uma galeria onde se encontram expostas cópias dos c",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://pt.wikipedia.org/wiki/Espaço_Lúcio_Costa"
+                }
+            ],
+            "painel_tatil": [
+                {
+                    "feature": "painel_tatil",
+                    "term": "maquete tátil",
+                    "snippet": "trado pela secretaria de estado de cultura do distrito federal e fica aberto de terça a domingo - inclusive feriados - das 9h às 18h, e conta com plataforma de acessibilidade para cadeirantes além de maquete tátil para deficientes visuais.[2][3] em seu interior fica a maquete de brasília, circundada por uma galeria onde se encontram expostas cópias dos croquis e do relatório do plano piloto apresentadas por co",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://pt.wikipedia.org/wiki/Espaço_Lúcio_Costa"
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 3,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "orange",
+    "sources": [
+        "https://pt.wikipedia.org/wiki/Espaço_Lúcio_Costa"
+    ],
+    "timestamp": "2025-06-06 19:48:54"
+}

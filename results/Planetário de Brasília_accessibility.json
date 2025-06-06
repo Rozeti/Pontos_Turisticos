@@ -1,0 +1,72 @@
+{
+    "name": "Planetário de Brasília",
+    "report": {
+        "features": {
+            "banheiros_adaptados": [
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "banheiros",
+                    "snippet": "l institucional: planetario@secti.df.gov.br; estamos no instagram @planetariodebrasilia; youtube: planetário de brasília. acessibilidade: há rampas de acesso para cadeirantes, plataforma para acesso, banheiros para pessoas deficientes e estacionamentos com vagas para idoso e deficientes; estacionamento: gratuito; wi-fi: gratuito; como chegar: linhas de ônibus de acesso ao palácio do buriti: 0.006, 0.024, 0",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://secti.df.gov.br/sobre-o-planetario-de-brasilia-luiz-cruls/"
+                },
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "banheiros",
+                    "snippet": "explicou. visita guiada com pcds para contribuir com a percepção sobre as reais necessidades. foto: divulgação internamente, é possível perceber acessibilidade em diversos pontos, como nas placas dos banheiros com leitura em braile, elevadores para cadeirantes e materiais em áudio para pessoas cegas — além de novos recursos que ainda serão implantados. “nosso foco é tornar a experiência acolhedora para tod",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://entorno.jornalopcao.com.br/tecnologia/planetario-de-brasilia-busca-se-tornar-primeiro-equipamento-publico-com-maior-acessibilidade-no-df-24986/"
+                }
+            ],
+            "plataformas_elevatorias": [
+                {
+                    "feature": "plataformas_elevatorias",
+                    "term": "plataforma",
+                    "snippet": "mações adicionais: e-mail institucional: planetario@secti.df.gov.br; estamos no instagram @planetariodebrasilia; youtube: planetário de brasília. acessibilidade: há rampas de acesso para cadeirantes, plataforma para acesso, banheiros para pessoas deficientes e estacionamentos com vagas para idoso e deficientes; estacionamento: gratuito; wi-fi: gratuito; como chegar: linhas de ônibus de acesso ao palácio do",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://secti.df.gov.br/sobre-o-planetario-de-brasilia-luiz-cruls/"
+                }
+            ],
+            "rampas": [
+                {
+                    "feature": "rampas",
+                    "term": "rampas",
+                    "snippet": "e 2007. custos: gratuito. informações adicionais: e-mail institucional: planetario@secti.df.gov.br; estamos no instagram @planetariodebrasilia; youtube: planetário de brasília. acessibilidade: há rampas de acesso para cadeirantes, plataforma para acesso, banheiros para pessoas deficientes e estacionamentos com vagas para idoso e deficientes; estacionamento: gratuito; wi-fi: gratuito; como chegar: li",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://secti.df.gov.br/sobre-o-planetario-de-brasilia-luiz-cruls/"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "braile",
+                    "snippet": "om pcds para contribuir com a percepção sobre as reais necessidades. foto: divulgação internamente, é possível perceber acessibilidade em diversos pontos, como nas placas dos banheiros com leitura em braile, elevadores para cadeirantes e materiais em áudio para pessoas cegas — além de novos recursos que ainda serão implantados. “nosso foco é tornar a experiência acolhedora para todos”, completou júnior.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://entorno.jornalopcao.com.br/tecnologia/planetario-de-brasilia-busca-se-tornar-primeiro-equipamento-publico-com-maior-acessibilidade-no-df-24986/"
+                }
+            ]
+        },
+        "score": 13,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 11,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Acessível",
+    "color": "green",
+    "sources": [
+        "https://secti.df.gov.br/sobre-o-planetario-de-brasilia-luiz-cruls/",
+        "https://entorno.jornalopcao.com.br/tecnologia/planetario-de-brasilia-busca-se-tornar-primeiro-equipamento-publico-com-maior-acessibilidade-no-df-24986/"
+    ],
+    "timestamp": "2025-06-06 19:47:17"
+}

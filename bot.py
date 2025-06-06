@@ -344,7 +344,9 @@ def save_json(landmark, report, classification, sources):
     }
     
     os.makedirs("results", exist_ok=True)
-    filename = f"results/{re.sub(r'[\\/*?:\"<>|]', '_', landmark)}_accessibility.json"
+    safe_landmark = re.sub(r'[\\/*?:"<>|]', '_', landmark)
+    filename = f"results/{safe_landmark}_accessibility.json"
+
     
     try:
         with open(filename, 'w', encoding='utf-8') as f:

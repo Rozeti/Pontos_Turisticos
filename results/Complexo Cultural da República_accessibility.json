@@ -1,0 +1,65 @@
+{
+    "name": "Complexo Cultural da República",
+    "report": {
+        "features": {
+            "banheiros_adaptados": [
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "banheiros",
+                    "snippet": "epublica/ instagram: https://www.instagram.com/museunacionaldarepublica facebook: https://www.facebook.com/museunacionaldarepublica entrada: gratuita. público-alvo: sociedade em geral acessibilidade: banheiros, elevadores e sinalização das salas em braille. a praça do conjunto cultural tem piso tátil. obs.: os auditórios do museu são restritos a eventos culturais e governamentais, com uso prioritário para",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2#:~:text=Entrada:%20Gratuita.&text=Acessibilidade:%20Banheiros%2C%20elevadores%20e%20sinaliza%C3%A7%C3%A3o,Conjunto%20Cultural%20tem%20piso%20t%C3%A1til."
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "braille",
+                    "snippet": "seunacionaldarepublica facebook: https://www.facebook.com/museunacionaldarepublica entrada: gratuita. público-alvo: sociedade em geral acessibilidade: banheiros, elevadores e sinalização das salas em braille. a praça do conjunto cultural tem piso tátil. obs.: os auditórios do museu são restritos a eventos culturais e governamentais, com uso prioritário para o programa educativo. obs.: não é permitido o c",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2#:~:text=Entrada:%20Gratuita.&text=Acessibilidade:%20Banheiros%2C%20elevadores%20e%20sinaliza%C3%A7%C3%A3o,Conjunto%20Cultural%20tem%20piso%20t%C3%A1til."
+                }
+            ],
+            "plataformas_elevatorias": [
+                {
+                    "feature": "plataformas_elevatorias",
+                    "term": "plataforma",
+                    "snippet": "or meio de duas rampas, o pavimento superior tem um vão livre de 3,2 mil m² e funciona como uma grande área de exposições destinada à realização de mostras. o mezanino fica acima do vão, ocupando uma plataforma de 719,63 m² com acesso por rampas e elevadores. no térreo, fica uma das principais entradas de acesso que leva a um auditório com capacidade de até 700 pessoas e outro menor, de 85 lugares. no pavim",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://www.quintoandar.com.br/guias/cidades/complexo-cultural-da-republica/#:~:text=exposi%C3%A7%C3%B5es%20e%20mezanino.-,Estrutura,uma%20vista%20panor%C3%A2mica%20da%20cidade."
+                }
+            ],
+            "rampas": [
+                {
+                    "feature": "rampas",
+                    "term": "rampas",
+                    "snippet": "ício feito de concreto em formato de uma semiesfera é dividido em quatro pavimentos: subsolo, piso térreo, piso superior para exposições e mezanino. estrutura com acesso independente por meio de duas rampas, o pavimento superior tem um vão livre de 3,2 mil m² e funciona como uma grande área de exposições destinada à realização de mostras. o mezanino fica acima do vão, ocupando uma plataforma de 719,63 m",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.quintoandar.com.br/guias/cidades/complexo-cultural-da-republica/#:~:text=exposi%C3%A7%C3%B5es%20e%20mezanino.-,Estrutura,uma%20vista%20panor%C3%A2mica%20da%20cidade."
+                }
+            ]
+        },
+        "score": 10,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 8,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Acessível",
+    "color": "green",
+    "sources": [
+        "https://www.cultura.df.gov.br/museu-nacional-republica#:~:text=N%C3%A3o%20%C3%A9%20permitido%20tocar%20ou,devem%20ser%20tiradas%20sem%20flash.&text=A%20capacidade%20m%C3%A1xima%20de%20visitantes,de%20100%20pessoas%20por%20vez.&text=O%20museu%20conta%20com%20uma,visual%20ampliada%20e%20em%20Braille.",
+        "https://www.cultura.df.gov.br/museu-nacional-da-republica-2#:~:text=Entrada:%20Gratuita.&text=Acessibilidade:%20Banheiros%2C%20elevadores%20e%20sinaliza%C3%A7%C3%A3o,Conjunto%20Cultural%20tem%20piso%20t%C3%A1til.",
+        "https://www.quintoandar.com.br/guias/cidades/complexo-cultural-da-republica/#:~:text=exposi%C3%A7%C3%B5es%20e%20mezanino.-,Estrutura,uma%20vista%20panor%C3%A2mica%20da%20cidade."
+    ],
+    "timestamp": "2025-06-06 19:48:11"
+}
