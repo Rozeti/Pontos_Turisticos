@@ -12,7 +12,7 @@ from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.lang import Builder
-from kivy_garden.mapview import MapView, MapMarkerPopup
+from kivy_garden.mapview import MapView, MapMarkerPopup, MarkerMapLayer
 import os
 import json
 
@@ -287,17 +287,18 @@ KV_CODE = """
                     Rectangle:
                         pos: self.pos
                         size: self.size
-                Label:
-                    text: 'Mapa Interativo com Pontos Turísticos'
-                    color: app.text_color
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    font_size: '20sp'
-                    bold: True
+                MapView:
+                    id: mapview_details
+                    size_hint: (1, 0.6)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                    zoom: 12
+                    lat: -15.793889  # Centro Brasília (ajuste se quiser)
+                    lon: -47.882778
                 BoxLayout:
                     id: map_popup
                     orientation: 'vertical'
-                    size_hint: (0.4, 0.2)
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    size_hint: (1, 0.2)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.9}
                     padding: dp(10)
                     spacing: dp(5)
                     canvas.before:
@@ -412,13 +413,12 @@ class MainScreen(Screen):
         detail_screen.load_details(marker.point_data['name'])
         self.manager.current = 'detail_screen'
 
-
 class DetailScreen(Screen):
     """
     Tela para exibir detalhes de um ponto turístico.
     """
-    # REMOVIDO o método on_enter, pois não é mais necessário carregar um exemplo padrão
-    
+    current_marker = False
+
     # MÉTODO RENOMEADO E MODIFICADO
     def load_details(self, location_name):
         app = App.get_running_app()
@@ -442,6 +442,16 @@ class DetailScreen(Screen):
         self.ids.geral_value.text = str(geral_value)
         self.ids.digital_value.text = str(digital_value)
         self.ids.cognitiva_value.text = str(cognitiva_value)
+
+        mapview = self.ids.mapview_details
+        lat = point.get('coordinates', 'N/D').get('latitude', 'N/D')
+        lon = point.get('coordinates', 'N/D').get('longitude', 'N/D')
+        marker = MapMarkerPopup(lat=lat, lon=lon)   
+        marker.point_data = point
+        if self.current_marker != False:
+            mapview.remove_widget(self.current_marker)
+        self.current_marker = marker
+        mapview.add_widget(marker)
 
         # Exemplo para atualizar a classificação e cores (você pode expandir)
         classification = point.get('classification', 'N/D')
