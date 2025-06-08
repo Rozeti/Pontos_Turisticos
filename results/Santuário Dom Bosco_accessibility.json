@@ -18,5 +18,9 @@
     "sources": [
         "https://turismo.df.gov.br/ponto-turistico/santuario-dom-bosco-acessibilidade/"
     ],
-    "timestamp": "2025-06-06 19:48:36"
+    "coordinates": {
+        "latitude": -15.8005935,
+        "longitude": -47.8947559
+    },
+    "timestamp": "2025-06-08 12:10:02"
 }

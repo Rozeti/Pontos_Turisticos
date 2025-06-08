@@ -39,5 +39,9 @@
     "sources": [
         "https://www.gov.br/pt-br/servicos/agendar-visita-institucional-ao-palacio-do-planalto"
     ],
-    "timestamp": "2025-06-06 19:49:32"
+    "coordinates": {
+        "latitude": -15.7989983,
+        "longitude": -47.8607657
+    },
+    "timestamp": "2025-06-08 12:11:10"
 }

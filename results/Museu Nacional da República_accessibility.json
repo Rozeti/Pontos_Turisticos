@@ -19,5 +19,9 @@
         "https://www.cultura.df.gov.br/museu-nacional-republica/",
         "https://mapa.cultura.df.gov.br/espaco/30/"
     ],
-    "timestamp": "2025-06-06 19:49:17"
+    "coordinates": {
+        "latitude": -15.7942,
+        "longitude": -47.8825
+    },
+    "timestamp": "2025-06-08 12:10:54"
 }

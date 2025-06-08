@@ -1,6 +1,6 @@
 # Como executar o front-end
 
-- pip install selenium pandas folium
+- pip install selenium pandas folium kivy
 - python front
 
 # Como executar o bot

@@ -334,20 +334,25 @@ def classify_accessibility(report):
         return ("Não Acessível", "red")
 
 def save_json(landmark, report, classification, sources):
+    coordinates = get_coordinates(landmark)  # ← ADICIONADO
+
     data = {
         "name": landmark,
         "report": report,
         "classification": classification[0],
         "color": classification[1],
         "sources": sources,
+        "coordinates": {
+            "latitude": coordinates[0],
+            "longitude": coordinates[1]
+        },  # ← ADICIONADO
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
     }
-    
+
     os.makedirs("results", exist_ok=True)
     safe_landmark = re.sub(r'[\\/*?:"<>|]', '_', landmark)
     filename = f"results/{safe_landmark}_accessibility.json"
 
-    
     try:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)

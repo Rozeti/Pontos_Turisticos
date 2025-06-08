@@ -18,5 +18,9 @@
     "sources": [
         "https://mapa.cultura.df.gov.br/espaco/60/"
     ],
-    "timestamp": "2025-06-06 19:50:10"
+    "coordinates": {
+        "latitude": -15.8012559,
+        "longitude": -47.9102131
+    },
+    "timestamp": "2025-06-08 12:11:50"
 }

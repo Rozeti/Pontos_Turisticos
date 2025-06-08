@@ -18,5 +18,9 @@
     "sources": [
         "https://turismo.df.gov.br/ponto-turistico/igreja-nossa-senhora-de-fatima-acessibilidade/"
     ],
-    "timestamp": "2025-06-06 19:48:47"
+    "coordinates": {
+        "latitude": -29.7865403,
+        "longitude": -50.8952525
+    },
+    "timestamp": "2025-06-08 12:10:12"
 }

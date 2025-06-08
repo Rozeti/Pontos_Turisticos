@@ -39,5 +39,9 @@
     "sources": [
         "https://www.gov.br/icmbio/pt-br/assuntos/biodiversidade/unidade-de-conservacao/unidades-de-biomas/cerrado/lista-de-ucs/parna-de-brasilia/informacoes-sobre-visitacao-2013-parna-de-brasilia"
     ],
-    "timestamp": "2025-06-06 19:50:47"
+    "coordinates": {
+        "latitude": -15.6329991,
+        "longitude": -48.0040548
+    },
+    "timestamp": "2025-06-08 12:12:20"
 }
