@@ -12,6 +12,9 @@ from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.lang import Builder
+from kivy_garden.mapview import MapView, MapMarkerPopup
+import os
+import json
 
 # Definindo as cores para consistência com o protótipo (tema escuro)
 PRIMARY_COLOR = get_color_from_hex('#1A1A1A') # Cor de fundo principal
@@ -80,17 +83,13 @@ KV_CODE = """
                     size: dp(30), dp(30)
                     color: app.text_color
 
-        Label:
-            text: 'Mapa Interativo (integrado com Folium)'
-            color: app.text_color
-            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
-            size_hint: (1, 0.4)
-            canvas.before:
-                Color:
-                    rgb: app.secondary_color
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        MapView:
+            id: mapview
+            size_hint: (1, 0.6)
+            pos_hint: {'x': 0, 'y': 0}
+            zoom: 12
+            lat: -15.793889  # Centro Brasília (ajuste se quiser)
+            lon: -47.882778
 
 
 <DetailScreen>:
@@ -418,6 +417,44 @@ class MainScreen(Screen):
         else:
             print(f"Local '{text}' não encontrado.")
             self.ids.search_input.text = f"'{text}' não encontrado!"
+        
+    def on_pre_enter(self):
+        """Adicionar marcadores toda vez que a tela for mostrada."""
+        mapview = self.ids.mapview
+        app = App.get_running_app()
+        mapview.map_source = "osm"
+
+        for point in app.points_data:
+            lat = point['coordinates']['latitude']
+            lon = point['coordinates']['longitude']
+            color = point.get('color', 'red')
+
+            # Criar um marcador com popup
+            marker = MapMarkerPopup(lat=lat, lon=lon)   
+
+            # Personalizar o popup do marcador
+            popup = Label(
+                text=f"{point['name']}\nClassificação: {point['classification']}",
+                size_hint=(None, None),
+                size=(200, 100),
+                color=(1, 1, 1, 1),
+                text_size=(180, None)
+            )
+            marker.add_widget(popup)
+
+            # Salvar os dados para usar depois (ex: para abrir detalhes)
+            marker.point_data = point
+
+            # Bind para clicar e mostrar detalhes
+            marker.bind(on_release=self.marker_clicked)
+
+            mapview.add_widget(marker)
+
+    def marker_clicked(self, marker):
+        app = App.get_running_app()
+        detail_screen = self.manager.get_screen('detail_screen')
+        detail_screen.load_details(marker.point_data['name'])
+        self.manager.current = 'detail_screen'
 
 
 class DetailScreen(Screen):
@@ -428,45 +465,29 @@ class DetailScreen(Screen):
     
     # MÉTODO RENOMEADO E MODIFICADO
     def load_details(self, location_name):
-        """
-        Carrega os detalhes de um local específico na tela.
-        Como não temos os dados detalhados, preenche os campos com 'N/D'.
-        """
-        # Preenche o nome do local
+        app = App.get_running_app()
+        point = next((p for p in app.points_data if p['name'] == location_name), None)
+
+        if not point:
+            self.ids.report_label.text = f"Dados para '{location_name}' não encontrados."
+            return
+
         self.ids.detail_search_input.text = location_name
-        
-        # Define todos os valores de detalhes como "Não Disponível"
-        self.ids.rampas_value_label.text = 'N/D'
-        self.ids.rampas_value_label.color = TEXT_COLOR
-        
-        self.ids.pista_tatil_value_label.text = 'N/D'
-        self.ids.pista_tatil_value_label.color = TEXT_COLOR
-        
-        self.ids.cao_guia_value_label.text = 'N/D'
-        self.ids.cao_guia_value_label.color = TEXT_COLOR
 
-        self.ids.elevadores_value_label.text = 'N/D'
-        self.ids.elevadores_value_label.color = TEXT_COLOR
+        # Exemplo para atualizar a classificação e cores (você pode expandir)
+        classification = point.get('classification', 'N/D')
+        color_map = {'red': (1, 0, 0, 1), 'yellow': (1, 1, 0, 1), 'green': (0, 1, 0, 1)}
+        color = color_map.get(point.get('color', 'red'), (1, 1, 1, 1))
 
-        self.ids.bombeiros_value_label.text = 'N/D'
-        self.ids.bombeiros_value_label.color = TEXT_COLOR
+        self.ids.report_label.text = f"Classificação: {classification}\n\nRelatório:\n{point.get('report', {}).get('features', {})}"
 
-        self.ids.segurancas_value_label.text = 'N/D'
-        self.ids.segurancas_value_label.color = TEXT_COLOR
+        # Atualize os labels de acessibilidade, segurança etc. aqui com os dados do point['report']['categories'] ou outros campos
+        # Por simplicidade, deixo você implementar essa parte detalhada
 
-        self.ids.cameras_value_label.text = 'N/D'
-        self.ids.cameras_value_label.color = TEXT_COLOR
-
-        self.ids.crimes_value_label.text = 'N/D'
-        self.ids.crimes_value_label.color = TEXT_COLOR
-
-        # Limpa e atualiza o relatório
-        self.ids.report_label.text = f"Relatório detalhado para '{location_name}' ainda não disponível."
-        
-        # Atualiza o pop-up do mapa
         self.ids.popup_title.text = location_name
-        self.ids.popup_status.text = "Status Indisponível"
-        self.ids.popup_rating.text = "N/D"
+        self.ids.popup_status.text = classification
+        self.ids.popup_rating.text = str(point.get('report', {}).get('score', 'N/D'))
+
 
     def search_location(self, text):
         """Método chamado ao pesquisar um local na tela de detalhes."""
@@ -489,8 +510,11 @@ class TurismoAcessivelApp(App):
     accent_color_yellow = ACCENT_COLOR_YELLOW
     accent_color_red = ACCENT_COLOR_RED
 
+    points_data = []
+
     def build(self):
         self.title = 'Turismo Acessível DF'
+        self.load_data_from_json()
         self.load_data_from_txt()
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main_screen'))
@@ -509,6 +533,25 @@ class TurismoAcessivelApp(App):
             print(f"Dados carregados de {file_path}: {len(self.locations_data)} locais encontrados.")
         except FileNotFoundError:
             print(f"AVISO: O arquivo '{file_path}' não foi encontrado. A busca não funcionará.")
+
+    def load_data_from_json(self):
+        folder = 'results'
+        self.points_data = []
+        if not os.path.exists(folder):
+            print(f"Pasta {folder} não encontrada.")
+            return
+        
+        for filename in os.listdir(folder):
+            if filename.endswith('.json'):
+                filepath = os.path.join(folder, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        self.points_data.append(data)
+                        self.locations_data.append(data)
+                except Exception as e:
+                    print(f"Erro ao ler {filename}: {e}")
+        print(f"{len(self.points_data)} pontos carregados da pasta {folder}.")
 
 
 if __name__ == '__main__':
