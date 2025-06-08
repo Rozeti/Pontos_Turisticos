@@ -186,117 +186,73 @@ KV_CODE = """
                         row_default_height: dp(30)
                         row_force_default: True
                         Label:
-                            text: 'Rampas para cadeirantes'
+                            text: 'Mobilidade'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: rampas_value_label
+                            id: mobilidade_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            text: 'Pista tátil'
+                            text: 'Visual'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: pista_tatil_value_label
+                            id: visual_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            text: 'Cão Guia'
+                            text: 'Auditiva'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: cao_guia_value_label
+                            id: auditiva_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            text: 'Elevadores'
+                            text: 'Geral'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: elevadores_value_label
-                            text: 'N/D'
-                            halign: 'right'
-                            text_size: self.size
-                            valign: 'middle'
-
-                    # Seção de Segurança
-                    Label:
-                        text: 'Segurança'
-                        color: app.text_color
-                        font_size: '20sp'
-                        bold: True
-                        size_hint_y: None
-                        height: dp(30)
-                        text_size: self.size
-                        valign: 'middle'
-
-                    GridLayout:
-                        id: security_grid
-                        cols: 2
-                        size_hint_y: None
-                        height: self.minimum_height
-                        spacing: dp(10)
-                        row_default_height: dp(30)
-                        row_force_default: True
-                        Label:
-                            text: 'Bombeiros'
-                            color: app.text_color
-                            halign: 'left'
-                            text_size: self.size
-                            valign: 'middle'
-                        Label:
-                            id: bombeiros_value_label
+                            id: geral_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            text: 'Seguranças'
+                            text: 'Digital'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: segurancas_value_label
+                            id: digital_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            text: 'Câmeras'
+                            text: 'Cognitiva'
                             color: app.text_color
                             halign: 'left'
                             text_size: self.size
                             valign: 'middle'
                         Label:
-                            id: cameras_value_label
-                            text: 'N/D'
-                            halign: 'right'
-                            text_size: self.size
-                            valign: 'middle'
-                        Label:
-                            text: 'Casos de crimes'
-                            color: app.text_color
-                            halign: 'left'
-                            text_size: self.size
-                            valign: 'middle'
-                        Label:
-                            id: crimes_value_label
+                            id: cognitiva_value
                             text: 'N/D'
                             halign: 'right'
                             text_size: self.size
@@ -472,14 +428,27 @@ class DetailScreen(Screen):
             self.ids.report_label.text = f"Dados para '{location_name}' não encontrados."
             return
 
+        mobilidade_value = point.get('report', 'N/D').get('categories', 'N/D').get('mobilidade', 'N/D')
+        visual_value = point.get('report', 'N/D').get('categories', 'N/D').get('visual', 'N/D')
+        auditiva_value = point.get('report', 'N/D').get('categories', 'N/D').get('auditiva', 'N/D')
+        geral_value = point.get('report', 'N/D').get('categories', 'N/D').get('geral', 'N/D')
+        digital_value = point.get('report', 'N/D').get('categories', 'N/D').get('digital', 'N/D')
+        cognitiva_value = point.get('report', 'N/D').get('categories', 'N/D').get('cognitiva', 'N/D')
+
         self.ids.detail_search_input.text = location_name
+        self.ids.mobilidade_value.text = str(mobilidade_value)
+        self.ids.visual_value.text = str(visual_value)
+        self.ids.auditiva_value.text = str(auditiva_value)
+        self.ids.geral_value.text = str(geral_value)
+        self.ids.digital_value.text = str(digital_value)
+        self.ids.cognitiva_value.text = str(cognitiva_value)
 
         # Exemplo para atualizar a classificação e cores (você pode expandir)
         classification = point.get('classification', 'N/D')
         color_map = {'red': (1, 0, 0, 1), 'yellow': (1, 1, 0, 1), 'green': (0, 1, 0, 1)}
         color = color_map.get(point.get('color', 'red'), (1, 1, 1, 1))
 
-        self.ids.report_label.text = f"Classificação: {classification}\n\nRelatório:\n{point.get('report', {}).get('features', {})}"
+        self.ids.report_label.text = f"Classificação: {classification}"
 
         # Atualize os labels de acessibilidade, segurança etc. aqui com os dados do point['report']['categories'] ou outros campos
         # Por simplicidade, deixo você implementar essa parte detalhada
