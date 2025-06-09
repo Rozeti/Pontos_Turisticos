@@ -17,8 +17,8 @@ import os
 import json
 
 # Definindo as cores para consistência com o protótipo (tema escuro)
-PRIMARY_COLOR = get_color_from_hex('#1A1A1A') # Cor de fundo principal
-SECONDARY_COLOR = get_color_from_hex('#2E2E2E') # Cor dos painéis/inputs
+PRIMARY_COLOR = get_color_from_hex("#0E0E0E") # Cor de fundo principal
+SECONDARY_COLOR = get_color_from_hex('#0E0E0E') # Cor dos painéis/inputs
 TEXT_COLOR = get_color_from_hex('#FFFFFF') # Cor do texto branco
 ACCENT_COLOR_GREEN = get_color_from_hex('#4CAF50') # Verde para "aprovado" / alto
 ACCENT_COLOR_YELLOW = get_color_from_hex('#FFEB3B') # Amarelo para "parcial" / médio
@@ -139,19 +139,10 @@ KV_CODE = """
                         
                         Image:
                             source: 'logo_turseguro.png'
-                            size_hint_x: None
+                            size_hint_x: 2
                             width: dp(50)
                             allow_stretch: True
                             keep_ratio: True
-                            
-                        Label:
-                            text: 'TurSeguro'
-                            color: app.text_color
-                            font_size: '22sp'
-                            bold: True
-                            size_hint_x: 1
-                            text_size: self.size
-                            valign: 'middle'
 
                     TextInput:
                         id: detail_search_input
