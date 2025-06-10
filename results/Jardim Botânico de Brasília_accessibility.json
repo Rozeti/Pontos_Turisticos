@@ -1,0 +1,57 @@
+{
+    "name": "Jardim Botânico de Brasília",
+    "report": {
+        "features": {
+            "banheiros_adaptados": [
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "Banheiros adaptados",
+                    "snippet": "Acessibilidade física: Banheiros adaptados; Bebedouro adaptado; Vaga de estacionamento exclusiva para idosos; Sanitário adaptado...",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "http://mapa.cultura.df.gov.br/espaco/id:754/"
+                }
+            ],
+            "bebedouro_adaptado": [
+                {
+                    "feature": "bebedouro_adaptado",
+                    "term": "Bebedouro adaptado",
+                    "snippet": "Acessibilidade física: Banheiros adaptados; Bebedouro adaptado;",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "http://mapa.cultura.df.gov.br/espaco/id:754/"
+                }
+            ],
+            "vagas_estacionamento": [
+                {
+                    "feature": "vagas_estacionamento",
+                    "term": "Vaga de estacionamento",
+                    "snippet": "Vaga de estacionamento exclusiva para idosos; Vaga de estacionamento exclusiva para deficientes.",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "http://mapa.cultura.df.gov.br/espaco/id:754/"
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 5,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "http://mapa.cultura.df.gov.br/espaco/id:754/"
+    ],
+    "coordinates": {
+        "latitude": -15.870163,
+        "longitude": -47.760781
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

@@ -1,0 +1,47 @@
+{
+    "name": "Planetário de Brasília",
+    "report": {
+        "features": {
+            "libras": [
+                {
+                    "feature": "libras",
+                    "term": "Libras",
+                    "snippet": "A versão com Libras foi apresentada a dois surdos, indicados pela intérprete do museu... que permite que o público surdo e ouvinte desfrute de seu conteúdo em uma perspectiva de inclusão.",
+                    "weight": 3,
+                    "category": "auditiva",
+                    "source": "https://www.ufmg.br/espacodoconhecimento/wp-content/uploads/2021/03/Resumo_CBEU_Diogenes.pdf"
+                }
+            ],
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampas",
+                    "snippet": "O acesso ao interior do Planetário é feito por rampas, facilitando a locomoção de pessoas com mobilidade reduzida.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "Pesquisa geral e observação de imagens."
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 0,
+            "auditiva": 3,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.ufmg.br/espacodoconhecimento/wp-content/uploads/2021/03/Resumo_CBEU_Diogenes.pdf"
+    ],
+    "coordinates": {
+        "latitude": -15.782,
+        "longitude": -47.899
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

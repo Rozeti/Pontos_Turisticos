@@ -1,0 +1,37 @@
+{
+    "name": "Igreja Nossa Senhora de Fátima (Igrejinha)",
+    "report": {
+        "features": {
+            "acesso_lateral": [
+                {
+                    "feature": "acesso_lateral",
+                    "term": "acesso lateral",
+                    "snippet": "Acessibilidade: Embora tenha escadas de acesso na parte da frente é possível acessar pelas laterais dos blocos residenciais 307 e 308.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://sentidosdoviajar.com/igreja-nossa-senhora-de-fatima-brasilia/"
+                }
+            ]
+        },
+        "score": 2,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://sentidosdoviajar.com/igreja-nossa-senhora-de-fatima-brasilia/"
+    ],
+    "coordinates": {
+        "latitude": -15.824,
+        "longitude": -47.882
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

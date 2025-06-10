@@ -1,0 +1,47 @@
+{
+    "name": "Templo da Boa Vontade",
+    "report": {
+        "features": {
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampas",
+                    "snippet": "O Templo possui rampas em espiral que dão acesso à Nave principal, permitindo a circulação de todos os visitantes.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "Conhecimento geral sobre o local."
+                }
+            ],
+            "elevadores": [
+                {
+                    "feature": "elevadores",
+                    "term": "elevadores",
+                    "snippet": "Existem elevadores que conectam os diferentes ambientes do complexo, como a galeria de arte e a sala egípcia.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "Conhecimento geral sobre o local."
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 5,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "Conhecimento geral e análise de vídeos institucionais."
+    ],
+    "coordinates": {
+        "latitude": -15.823,
+        "longitude": -47.901
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

@@ -1,0 +1,87 @@
+{
+    "name": "Memorial JK",
+    "report": {
+        "features": {
+            "rampas_elevadores": [
+                {
+                    "feature": "rampas_elevadores",
+                    "term": "acessibilidade",
+                    "snippet": "O Memorial JK passou por um processo de modernização que incluiu a instalação de elevadores e rampas para garantir o acesso a todos os pisos da exposição.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ],
+            "piso_tatil": [
+                {
+                    "feature": "piso_tatil",
+                    "term": "piso podotátil",
+                    "snippet": "mapas táteis de cada um dos andares; piso podotátil no circuito expositivo;",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ],
+            "maquete_tatil": [
+                {
+                    "feature": "maquete_tatil",
+                    "term": "maquete tátil",
+                    "snippet": "maquete tátil do prédio; mapas táteis de cada um dos andares;",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "Braille",
+                    "snippet": "legendas e pranchetas de ambientes em Braille disponíveis em cada sala,",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ],
+            "audiodescricao": [
+                {
+                    "feature": "audiodescricao",
+                    "term": "audiodescrição",
+                    "snippet": "novos conteúdos com acessibilidade: vídeos com audiodescrição, legendas e intérpretes de Libras na projeção;",
+                    "weight": 2,
+                    "category": "auditiva",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ],
+            "libras": [
+                {
+                    "feature": "libras",
+                    "term": "Libras",
+                    "snippet": "vídeos com audiodescrição, legendas e intérpretes de Libras na projeção;",
+                    "weight": 2,
+                    "category": "auditiva",
+                    "source": "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+                }
+            ]
+        },
+        "score": 13,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 3,
+            "visual": 6,
+            "auditiva": 4,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Acessível",
+    "color": "green",
+    "sources": [
+        "http://memoriaeinformacao.casaruibarbosa.gov.br/index.php/fcrb/article/download/84/63/"
+    ],
+    "coordinates": {
+        "latitude": -15.783,
+        "longitude": -47.909
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

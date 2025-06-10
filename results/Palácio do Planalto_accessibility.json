@@ -1,0 +1,48 @@
+{
+    "name": "Palácio do Planalto",
+    "report": {
+        "features": {
+            "libras": [
+                {
+                    "feature": "libras",
+                    "term": "Libras",
+                    "snippet": "O Programa de Visitação Pública do Palácio do Planalto terá um profissional intérprete de Libras do Ministério da Mulher, da Família e dos Direitos Humanos, no último domingo de cada mês.",
+                    "weight": 2,
+                    "category": "auditiva",
+                    "source": "https://www.librasol.com.br/visita-ao-palacio-do-planalto-tem-interpretacao-em-libras/"
+                }
+            ],
+            "atendimento_prioritario": [
+                {
+                    "feature": "atendimento_prioritario",
+                    "term": "atendimento prioritário",
+                    "snippet": "Tem direito a atendimento prioritário as pessoas com deficiência, os idosos com idade igual ou superior a 60 anos, as gestantes, as lactantes, as pessoas com crianças de colo e os obesos...",
+                    "weight": 1,
+                    "category": "geral",
+                    "source": "https://www.gov.br/pt-br/servicos/agendar-visita-institucional-ao-palacio-do-planalto"
+                }
+            ]
+        },
+        "score": 3,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 0,
+            "visual": 0,
+            "auditiva": 2,
+            "geral": 1,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.librasol.com.br/visita-ao-palacio-do-planalto-tem-interpretacao-em-libras/",
+        "https://www.gov.br/pt-br/servicos/agendar-visita-institucional-ao-palacio-do-planalto"
+    ],
+    "coordinates": {
+        "latitude": -15.7801,
+        "longitude": -47.9292
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

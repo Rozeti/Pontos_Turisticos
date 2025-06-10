@@ -1,0 +1,58 @@
+{
+    "name": "Ermida Dom Bosco",
+    "report": {
+        "features": {
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampas de acesso",
+                    "snippet": "Em 2020, o local passou por reformas que trouxeram mais acessibilidade, como rampas de acesso, pisos táteis e placas com orientações em Braille.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://pt.wikipedia.org/wiki/Ermida_Dom_Bosco"
+                }
+            ],
+            "piso_tatil": [
+                {
+                    "feature": "piso_tatil",
+                    "term": "pisos táteis",
+                    "snippet": "Em 2020, o local passou por reformas que trouxeram mais acessibilidade, como rampas de acesso, pisos táteis e placas com orientações em Braille.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://pt.wikipedia.org/wiki/Ermida_Dom_Bosco"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "Braille",
+                    "snippet": "Em 2020, o local passou por reformas que trouxeram mais acessibilidade, como rampas de acesso, pisos táteis e placas com orientações em Braille.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://pt.wikipedia.org/wiki/Ermida_Dom_Bosco"
+                }
+            ]
+        },
+        "score": 7,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 3,
+            "visual": 4,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://pt.wikipedia.org/wiki/Ermida_Dom_Bosco",
+        "https://www.agenciabrasilia.df.gov.br/2021/04/15/monumento-natural-dom-bosco-ganha-mais-acessibilidade/"
+    ],
+    "coordinates": {
+        "latitude": -15.798437,
+        "longitude": -47.809335
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

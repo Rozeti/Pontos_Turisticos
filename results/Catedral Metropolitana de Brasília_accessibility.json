@@ -1,0 +1,47 @@
+{
+    "name": "Catedral Metropolitana de Brasília",
+    "report": {
+        "features": {
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampa",
+                    "snippet": "há estacionamento acessível e rampa na entrada subterrânea.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://www.visitebrasilia.com.br/turismo/catedral-metropolitana-de-nossa-senhora-aparecida"
+                }
+            ],
+            "vagas_estacionamento": [
+                {
+                    "feature": "vagas_estacionamento",
+                    "term": "estacionamento acessível",
+                    "snippet": "No estacionamento da entrada principal não há vagas para pessoas com deficiência nem rampa de acesso entre a rua e a calçada, entretanto há estacionamento acessível e rampa na entrada subterrânea.",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "https://www.visitebrasilia.com.br/turismo/catedral-metropolitana-de-nossa-senhora-aparecida"
+                }
+            ]
+        },
+        "score": 4,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 4,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.visitebrasilia.com.br/turismo/catedral-metropolitana-de-nossa-senhora-aparecida"
+    ],
+    "coordinates": {
+        "latitude": -15.798342,
+        "longitude": -47.875539
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

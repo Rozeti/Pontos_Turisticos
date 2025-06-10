@@ -1,0 +1,67 @@
+{
+    "name": "Complexo Cultural da República",
+    "report": {
+        "features": {
+            "banheiros_adaptados": [
+                {
+                    "feature": "banheiros_adaptados",
+                    "term": "banheiros",
+                    "snippet": "acessibilidade: banheiros, elevadores e sinalização das salas em braille. a praça do conjunto cultural tem piso tátil.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2"
+                }
+            ],
+            "elevadores": [
+                {
+                    "feature": "elevadores",
+                    "term": "elevadores",
+                    "snippet": "Acessibilidade: Banheiros, elevadores e sinalização das salas em braille.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "braille",
+                    "snippet": "sinalização das salas em braille. a praça do conjunto cultural tem piso tátil.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2"
+                }
+            ],
+            "piso_tatil": [
+                {
+                    "feature": "piso_tatil",
+                    "term": "piso tátil",
+                    "snippet": "a praça do conjunto cultural tem piso tátil.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.cultura.df.gov.br/museu-nacional-da-republica-2"
+                }
+            ]
+        },
+        "score": 10,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 6,
+            "visual": 4,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.cultura.df.gov.br/museu-nacional-da-republica-2"
+    ],
+    "coordinates": {
+        "latitude": -15.796384,
+        "longitude": -47.879327
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

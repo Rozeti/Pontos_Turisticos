@@ -1,0 +1,47 @@
+{
+    "name": "Parque Nacional de Brasília",
+    "report": {
+        "features": {
+            "estrutura_inclusiva": [
+                {
+                    "feature": "estrutura_inclusiva",
+                    "term": "estrutura 100% inclusiva",
+                    "snippet": "Parque em Brasília é o primeiro do país com estrutura 100% inclusiva. A iniciativa insere o Distrito Federal no eixo do turismo acessível nacional...",
+                    "weight": 3,
+                    "category": "geral",
+                    "source": "https://guiaderodas.com/parque-em-brasilia-e-o-primeiro-do-pais-com-estrutura-100-inclusiva/"
+                }
+            ],
+            "transporte_acessivel": [
+                {
+                    "feature": "transporte_acessivel",
+                    "term": "vans acessíveis",
+                    "snippet": "Para facilitar ainda mais o acesso ao lazer e ao esporte, o projeto “Mãos na Roda” vai disponibilizar 50 vans acessíveis, que vão contribuir com o deslocamento dos visitantes até o parque.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://guiaderodas.com/parque-em-brasilia-e-o-primeiro-do-pais-com-estrutura-100-inclusiva/"
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 3,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://guiaderodas.com/parque-em-brasilia-e-o-primeiro-do-pais-com-estrutura-100-inclusiva/"
+    ],
+    "coordinates": {
+        "latitude": -15.71794,
+        "longitude": -48.01256
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

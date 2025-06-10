@@ -1,0 +1,48 @@
+{
+    "name": "Parque da Cidade Sarah Kubitschek",
+    "report": {
+        "features": {
+            "pista_caminhada_acessivel": [
+                {
+                    "feature": "pista_caminhada_acessivel",
+                    "term": "pista de caminhada",
+                    "snippet": "O projeto da nova pista de caminhada do Parque da Cidade Sarah Kubitschek, em Brasília, será alterado para garantir acessibilidade às pessoas com deficiência.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www2.tc.df.gov.br/obra-da-nova-pista-do-parque-da-cidade-sera-retomada-com-alteracoes/"
+                }
+            ],
+            "atividades_esportivas_adaptadas": [
+                {
+                    "feature": "atividades_esportivas_adaptadas",
+                    "term": "atividades esportivas",
+                    "snippet": "Parque da Cidade receberá atividades esportivas para pessoas com deficiência. Tênis de mesa, tiro com arco e aulas de canoagem estão entre as aulas presentes na programação.",
+                    "weight": 2,
+                    "category": "geral",
+                    "source": "https://www.correiobraziliense.com.br/cidades-df/2022/02/4983978-parque-da-cidade-recebera-atividades-esportivas-para-pessoas-com-deficiencia.html"
+                }
+            ]
+        },
+        "score": 4,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 2,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www2.tc.df.gov.br/obra-da-nova-pista-do-parque-da-cidade-sera-retomada-com-alteracoes/",
+        "https://www.correiobraziliense.com.br/cidades-df/2022/02/4983978-parque-da-cidade-recebera-atividades-esportivas-para-pessoas-com-deficiencia.html"
+    ],
+    "coordinates": {
+        "latitude": -15.800343,
+        "longitude": -47.9078
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

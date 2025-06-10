@@ -1,0 +1,26 @@
+{
+    "name": "Igreja Nossa Senhora de Fátima (Igrejinha)",
+    "report": {
+        "features": {},
+        "score": 0,
+        "found_any": false,
+        "categories": {
+            "mobilidade": 0,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Não Acessível",
+    "color": "red",
+    "sources": [
+        "https://turismo.df.gov.br/ponto-turistico/igreja-nossa-senhora-de-fatima-acessibilidade/"
+    ],
+    "coordinates": {
+        "latitude": -29.7865403,
+        "longitude": -50.8952525
+    },
+    "timestamp": "2025-06-10 00:01:39"
+}

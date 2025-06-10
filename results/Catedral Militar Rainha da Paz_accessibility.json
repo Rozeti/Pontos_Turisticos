@@ -1,0 +1,57 @@
+{
+    "name": "Catedral Militar Rainha da Paz",
+    "report": {
+        "features": {
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampa",
+                    "snippet": "Acesso por meio de rampa.",
+                    "weight": 3,
+                    "category": "mobilidade",
+                    "source": "https://visitebrasilia.com.br/turismo/catedral-militar-rainha-da-paz"
+                }
+            ],
+            "banheiros_acessiveis": [
+                {
+                    "feature": "banheiros_acessiveis",
+                    "term": "sanitários acessíveis",
+                    "snippet": "Possui sanitários acessíveis, mas não estão de acordo com a Norma ABNT 9050:2015.",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "https://visitebrasilia.com.br/turismo/catedral-militar-rainha-da-paz"
+                }
+            ],
+            "vagas_estacionamento": [
+                {
+                    "feature": "vagas_estacionamento",
+                    "term": "vagas para pessoas com deficiência",
+                    "snippet": "Estacionamento com vagas para pessoas com deficiência, entretanto sem o espaço reservado listrado para locomoção.",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "https://visitebrasilia.com.br/turismo/catedral-militar-rainha-da-paz"
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 5,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://visitebrasilia.com.br/turismo/catedral-militar-rainha-da-paz"
+    ],
+    "coordinates": {
+        "latitude": -15.7807513,
+        "longitude": -47.9241512
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

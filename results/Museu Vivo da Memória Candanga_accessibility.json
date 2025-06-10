@@ -1,0 +1,57 @@
+{
+    "name": "Museu Vivo da Memória Candanga",
+    "report": {
+        "features": {
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampas",
+                    "snippet": "Há rampas de concreto para acesso às edificações cujas entradas estão acima do nível da calçada.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-vivo-da-memoria-candanga"
+                }
+            ],
+            "vagas_estacionamento": [
+                {
+                    "feature": "vagas_estacionamento",
+                    "term": "vaga reservada",
+                    "snippet": "Há uma vaga reservada para pessoas com deficiência física junto à edificação onde ficam a sala de exposição de longa duração...",
+                    "weight": 1,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-vivo-da-memoria-candanga"
+                }
+            ],
+            "passarelas": [
+                {
+                    "feature": "passarelas",
+                    "term": "passarelas",
+                    "snippet": "Há passarelas de concreto que conectam as edificações que compõem o complexo.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.cultura.df.gov.br/museu-vivo-da-memoria-candanga"
+                }
+            ]
+        },
+        "score": 5,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 5,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.cultura.df.gov.br/museu-vivo-da-memoria-candanga"
+    ],
+    "coordinates": {
+        "latitude": -15.860556,
+        "longitude": -47.959167
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

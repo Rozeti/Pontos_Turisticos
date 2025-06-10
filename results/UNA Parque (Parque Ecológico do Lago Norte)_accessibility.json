@@ -1,0 +1,67 @@
+{
+    "name": "UNA Parque (Parque Ecológico do Lago Norte)",
+    "report": {
+        "features": {
+            "pisos_adaptados": [
+                {
+                    "feature": "pisos_adaptados",
+                    "term": "pisos adaptados",
+                    "snippet": "O espaço será inclusivo, composto por contêineres com pisos adaptados, rampas e sinalização em Braille.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.correiobraziliense.com.br/cidades-df/2021/01/4903167-parque-vivencial-do-lago-norte-vai-ganhar-equipamento-para-acessibilidade.html"
+                }
+            ],
+            "rampas_acesso": [
+                {
+                    "feature": "rampas_acesso",
+                    "term": "rampas",
+                    "snippet": "O espaço será inclusivo, composto por contêineres com pisos adaptados, rampas e sinalização em Braille.",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.correiobraziliense.com.br/cidades-df/2021/01/4903167-parque-vivencial-do-lago-norte-vai-ganhar-equipamento-para-acessibilidade.html"
+                }
+            ],
+            "braille": [
+                {
+                    "feature": "braille",
+                    "term": "Braille",
+                    "snippet": "O espaço será inclusivo, composto por contêineres com pisos adaptados, rampas e sinalização em Braille.",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.correiobraziliense.com.br/cidades-df/2021/01/4903167-parque-vivencial-do-lago-norte-vai-ganhar-equipamento-para-acessibilidade.html"
+                }
+            ],
+            "atividades_inclusivas": [
+                {
+                    "feature": "atividades_inclusivas",
+                    "term": "atividades",
+                    "snippet": "A ação proporcionará atividades como aulas de canoagem, stand up paddle, yoga e tênis de mesa. As experiências serão gratuitas para pessoas com deficiência...",
+                    "weight": 2,
+                    "category": "geral",
+                    "source": "https://www.correiobraziliense.com.br/cidades-df/2021/01/4903167-parque-vivencial-do-lago-norte-vai-ganhar-equipamento-para-acessibilidade.html"
+                }
+            ]
+        },
+        "score": 8,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 4,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 2,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.correiobraziliense.com.br/cidades-df/2021/01/4903167-parque-vivencial-do-lago-norte-vai-ganhar-equipamento-para-acessibilidade.html"
+    ],
+    "coordinates": {
+        "latitude": -15.753,
+        "longitude": -47.848
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

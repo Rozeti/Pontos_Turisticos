@@ -1,0 +1,47 @@
+{
+    "name": "Praça dos Três Poderes",
+    "report": {
+        "features": {
+            "rampas_acesso_futuro": [
+                {
+                    "feature": "rampas_acesso_futuro",
+                    "term": "rampas de acessibilidade",
+                    "snippet": "Haverá ainda modernização dos bancos, nova iluminação para monumentos, instalação de rampas de acessibilidade, piso tátil para pessoas com deficiência visual...",
+                    "weight": 2,
+                    "category": "mobilidade",
+                    "source": "https://www.vozdebrasilia.com.br/praca-dos-tres-poderes-sera-revitalizada-e-entregue-em-julho-de-2026-com-foco-em-acessibilidade-e-seguranca/"
+                }
+            ],
+            "piso_tatil_futuro": [
+                {
+                    "feature": "piso_tatil_futuro",
+                    "term": "piso tátil",
+                    "snippet": "instalação de rampas de acessibilidade, piso tátil para pessoas com deficiência visual, sistemas de drenagem, sinalização aprimorada...",
+                    "weight": 2,
+                    "category": "visual",
+                    "source": "https://www.vozdebrasilia.com.br/praca-dos-tres-poderes-sera-revitalizada-e-entregue-em-julho-de-2026-com-foco-em-acessibilidade-e-seguranca/"
+                }
+            ]
+        },
+        "score": 4,
+        "found_any": true,
+        "categories": {
+            "mobilidade": 2,
+            "visual": 2,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Parcialmente Acessível",
+    "color": "yellow",
+    "sources": [
+        "https://www.vozdebrasilia.com.br/praca-dos-tres-poderes-sera-revitalizada-e-entregue-em-julho-de-2026-com-foco-em-acessibilidade-e-seguranca/"
+    ],
+    "coordinates": {
+        "latitude": -15.800,
+        "longitude": -47.862
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}

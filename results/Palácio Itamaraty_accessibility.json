@@ -1,0 +1,26 @@
+{
+    "name": "Palácio Itamaraty",
+    "report": {
+        "features": {},
+        "score": 0,
+        "found_any": false,
+        "categories": {
+            "mobilidade": 0,
+            "visual": 0,
+            "auditiva": 0,
+            "geral": 0,
+            "digital": 0,
+            "cognitiva": 0
+        }
+    },
+    "classification": "Sem Informação",
+    "color": "red",
+    "sources": [
+        "https://www.gov.br/mre/pt-br/assuntos/palacio-itamaraty/visite-o-itamaraty"
+    ],
+    "coordinates": {
+        "latitude": -15.801111,
+        "longitude": -47.866944
+    },
+    "timestamp": "2025-06-09 23:20:15"
+}
