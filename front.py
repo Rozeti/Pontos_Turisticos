@@ -19,19 +19,16 @@ import os
 import json
 import logging
 
-# Configurar logging para diagnosticar problemas
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Definindo as cores para consistência com o protótipo (tema escuro)
-PRIMARY_COLOR = get_color_from_hex("#0E0E0E")  # Cor de fundo principal
-SECONDARY_COLOR = get_color_from_hex('#0E0E0E')  # Cor dos painéis/inputs
-TEXT_COLOR = get_color_from_hex('#FFFFFF')  # Cor do texto branco
-ACCENT_COLOR_GREEN = get_color_from_hex('#4CAF50')  # Verde para "aprovado" / alto
-ACCENT_COLOR_YELLOW = get_color_from_hex('#FFEB3B')  # Amarelo para "parcial" / médio
-ACCENT_COLOR_RED = get_color_from_hex('#F44336')  # Vermelho para "não aprovado" / baixo
+PRIMARY_COLOR = get_color_from_hex("#0E0E0E")
+SECONDARY_COLOR = get_color_from_hex('#0E0E0E')
+TEXT_COLOR = get_color_from_hex('#FFFFFF')
+ACCENT_COLOR_GREEN = get_color_from_hex('#4CAF50')
+ACCENT_COLOR_YELLOW = get_color_from_hex('#FFEB3B')
+ACCENT_COLOR_RED = get_color_from_hex('#F44336')
 
-# O Kivy Language (KV) para definir o layout das telas
 KV_CODE = """
 <MainScreen>:
     FloatLayout:
@@ -42,9 +39,8 @@ KV_CODE = """
                 pos: self.pos
                 size: self.size
 
-        # Logo TurSeguro
         Image:
-            source: 'logo_turseguro.png' # Você precisará ter esta imagem no diretório
+            source: 'logo_turseguro.png'
             size_hint: (0.3, 0.2)
             pos_hint: {'center_x': 0.5, 'top': 0.9}
             allow_stretch: True
@@ -75,7 +71,7 @@ KV_CODE = """
                 font_size: '18sp'
                 padding: [dp(15), (self.height - self.line_height) / 2]
                 size_hint_x: 0.9
-                on_text_validate: root.search_location(self.text) # Ao pressionar Enter
+                on_text_validate: root.search_location(self.text)
 
             Button:
                 background_normal: ''
@@ -83,7 +79,7 @@ KV_CODE = """
                 size_hint_x: 0.1
                 on_release: root.search_location(search_input.text)
                 Image:
-                    source: 'search_icon.png' # Ícone de lupa, precisa ser fornecido
+                    source: 'search_icon.png'
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
                     size: dp(30), dp(30)
@@ -94,11 +90,11 @@ KV_CODE = """
             size_hint: (1, 0.6)
             pos_hint: {'x': 0, 'y': 0}
             zoom: 12
-            lat: -15.793889  # Centro Brasília
+            lat: -15.793889
             lon: -47.882778
 
 <DetailScreen>:
-    square_color: [1, 1, 1, 1]  # Cor padrão (branco) para o quadrado
+    square_color: [1, 1, 1, 1]
     FloatLayout:
         canvas.before:
             Color:
@@ -111,9 +107,8 @@ KV_CODE = """
             orientation: 'horizontal'
             size_hint: (1, 1)
 
-            # Painel esquerdo de detalhes
             ScrollView:
-                size_hint: (0.4, 1) # Ocupa 40% da largura
+                size_hint: (0.4, 1)
                 canvas.before:
                     Color:
                         rgb: app.secondary_color
@@ -163,7 +158,6 @@ KV_CODE = """
                         height: dp(60)
                         on_text_validate: root.search_location(self.text)
 
-                    # Seção de Acessibilidade
                     Label:
                         text: 'Acessibilidade'
                         color: app.text_color
@@ -255,7 +249,6 @@ KV_CODE = """
                             text_size: self.size
                             valign: 'middle'
 
-                    # Relatório Descritivo
                     Label:
                         text: 'Relatório descritivo'
                         color: app.text_color
@@ -275,7 +268,6 @@ KV_CODE = """
                         text_size: self.width, None
                         valign: 'top'
 
-            # Área do mapa (direita)
             FloatLayout:
                 size_hint: (0.6, 1)
                 canvas.before:
@@ -289,7 +281,7 @@ KV_CODE = """
                     size_hint: (1, 0.6)
                     pos_hint: {'center_x': 0.5, 'center_y': 0.4}
                     zoom: 12
-                    lat: -15.793889  # Centro Brasília
+                    lat: -15.793889
                     lon: -47.882778
                 BoxLayout:
                     id: map_popup
@@ -342,18 +334,10 @@ KV_CODE = """
                             text_size: self.width, None
 """
 
-# Carregar o KV_CODE
 Builder.load_string(KV_CODE)
 
 class MainScreen(Screen):
-    """
-    Tela principal para buscar locais e visualizar o mapa.
-    """
     def search_location(self, text):
-        """
-        Método chamado ao pesquisar um local.
-        Busca na lista carregada do .txt.
-        """
         logger.info(f"Pesquisando por: {text}")
         app = App.get_running_app()
         search_text = text.lower().strip()
@@ -371,19 +355,16 @@ class MainScreen(Screen):
         else:
             logger.warning(f"Local '{text}' não encontrado.")
             self.ids.search_input.text = f"'{text}' não encontrado!"
-        
+    
     def on_pre_enter(self):
-        """Adicionar marcadores toda vez que a tela for mostrada."""
         mapview = self.ids.mapview
         app = App.get_running_app()
         mapview.map_source = "osm"
 
-        # Limpar marcadores existentes para evitar duplicatas
         for widget in mapview.children[:]:
             if isinstance(widget, MapMarkerPopup):
                 mapview.remove_widget(widget)
 
-        # Dicionário para mapear cores a imagens de marcadores
         marker_images = {
             'green': 'marker_green.png',
             'red': 'marker_red.png',
@@ -400,16 +381,14 @@ class MainScreen(Screen):
             color = point.get('color', 'red')
             marker_image = marker_images.get(color, 'marker_red.png')
             
-            # Verificar se a imagem do marcador existe
             if not os.path.exists(marker_image):
                 logger.warning(f"Imagem do marcador '{marker_image}' não encontrada. Usando marcador padrão.")
-                marker = MapMarkerPopup(lat=lat, lon=lon)  # Fallback para marcador padrão
+                marker = MapMarkerPopup(lat=lat, lon=lon)
             else:
                 marker = MapMarkerPopup(lat=lat, lon=lon, source=marker_image)
 
-            # Personalizar o popup do marcador
             popup = Label(
-                text=f"{point['name']}\nClassificação: {point['classification']}",
+                text=f"{point['name']}\\nClassificação: {point['classification']}",
                 size_hint=(None, None),
                 size=(200, 100),
                 color=(1, 1, 1, 1),
@@ -417,10 +396,8 @@ class MainScreen(Screen):
             )
             marker.add_widget(popup)
 
-            # Salvar os dados para usar depois
             marker.point_data = point
 
-            # Bind para clicar e mostrar detalhes
             marker.bind(on_release=self.marker_clicked)
 
             mapview.add_widget(marker)
@@ -433,10 +410,7 @@ class MainScreen(Screen):
         self.manager.current = 'detail_screen'
 
 class DetailScreen(Screen):
-    """
-    Tela para exibir detalhes de um ponto turístico.
-    """
-    square_color = ListProperty([1, 1, 1, 1])  # Propriedade para a cor do quadrado
+    square_color = ListProperty([1, 1, 1, 1])
     current_marker = False
 
     def load_details(self, location_name):
@@ -470,7 +444,6 @@ class DetailScreen(Screen):
             logger.warning(f"Coordenadas inválidas para {location_name}")
             return
 
-        # Dicionário para mapear cores a imagens de marcadores
         marker_images = {
             'green': 'marker_green.png',
             'red': 'marker_red.png',
@@ -479,10 +452,9 @@ class DetailScreen(Screen):
         color = point.get('color', 'red')
         marker_image = marker_images.get(color, 'marker_red.png')
 
-        # Verificar se a imagem do marcador existe
         if not os.path.exists(marker_image):
             logger.warning(f"Imagem do marcador '{marker_image}' não encontrada. Usando marcador padrão.")
-            marker = MapMarkerPopup(lat=lat, lon=lon)  # Fallback para marcador padrão
+            marker = MapMarkerPopup(lat=lat, lon=lon)
         else:
             marker = MapMarkerPopup(lat=lat, lon=lon, source=marker_image)
 
@@ -501,29 +473,24 @@ class DetailScreen(Screen):
         score = point.get('report', {}).get('score', 'N/D')
         self.ids.popup_rating.text = str(score)
 
-        # Definir a cor do quadrado com base no score
         if isinstance(score, (int, float)):
             if score < 5:
                 self.square_color = ACCENT_COLOR_RED
             elif 5 <= score < 10:
                 self.square_color = ACCENT_COLOR_YELLOW
-            else:  # score >= 10
+            else:
                 self.square_color = ACCENT_COLOR_GREEN
         else:
-            self.square_color = [1, 1, 1, 1]  # Branco como padrão para scores inválidos
+            self.square_color = [1, 1, 1, 1]
             logger.warning(f"Score inválido para {location_name}: {score}")
 
     def search_location(self, text):
-        """Método chamado ao pesquisar um local na tela de detalhes."""
         logger.info(f"Pesquisando (na tela de detalhes) por: {text}")
         main_screen = self.manager.get_screen('main_screen')
         main_screen.ids.search_input.text = text 
         self.manager.current = 'main_screen'
 
 class TurismoAcessivelApp(App):
-    """
-    Classe principal do aplicativo Kivy.
-    """
     locations_data = []
 
     primary_color = PRIMARY_COLOR
@@ -545,7 +512,6 @@ class TurismoAcessivelApp(App):
         return sm
     
     def load_data_from_txt(self):
-        """Lê os nomes dos locais do arquivo .txt e os armazena na lista."""
         file_path = 'tourist_attractions.txt'
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -577,12 +543,4 @@ class TurismoAcessivelApp(App):
         logger.info(f"{len(self.points_data)} pontos carregados da pasta {folder}.")
 
 if __name__ == '__main__':
-    # Para o aplicativo funcionar, você deve fornecer os seguintes arquivos de imagem
-    # no mesmo diretório que o seu script Python:
-    # 1. logo_turseguro.png
-    # 2. search_icon.png
-    # 3. marker_green.png
-    # 4. marker_red.png
-    # 5. marker_yellow.png
-    
     TurismoAcessivelApp().run()
